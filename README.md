@@ -6,7 +6,7 @@
 ### Ultimate Windows IT Automation — PowerShell
 *Effortless deployment, optimization, and system fixes.*
 
-**Author:** [shouravx](https://github.com/shouravx) &nbsp;|&nbsp; **GitHub:** [rhshourav/Windows-Scripts](https://github.com/shouravx/Windows-Scripts) &nbsp;|&nbsp; **Live:** [itrun.pages.dev](https://itrun.pages.dev)
+**Author:** [shouravx](https://github.com/shouravx) &nbsp;|&nbsp; **GitHub:** [shouravx/Windows-Scripts](https://github.com/shouravx/Windows-Scripts) &nbsp;|&nbsp; **Live:** [itrun.pages.dev](https://itrun.pages.dev)
 
 </div>
 
