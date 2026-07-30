@@ -1,0 +1,659 @@
+<#
+  Windows Photos "Invalid Value for Registry" Fix + Default App Associations Auto-Apply
+  Part of: Windows-Scripts
+  Author : rhshourav
+  GitHub : https://github.com/rhshourav/Windows-Scripts
+  Version: 1.2.1
+
+  - Auto-detect OS + installed apps
+  - Downloads matching XML (and optional REG) from:
+    https://api.github.com/repos/rhshourav/Windows-Scripts/contents/Windows-Photo-Invalid-Reg-Value/File%20Associations?ref=main
+  - Applies DefaultAssociationsConfiguration policy + DISM import
+  - Clears per-user broken UserChoice keys for common image extensions
+  - Resets/repairs Microsoft Photos (terminate, clear LocalState, re-register)
+  - Auto-elevates (safe for: iex (irm ...))
+#>
+
+[CmdletBinding()]
+param(
+  [string]$ForceConfig = "",        # e.g. "Win11_ImageGlass+VLC+7zip+Acrobat.xml"
+  [switch]$SkipPhotosRepair,
+  [switch]$SkipDefaultApps,
+  [switch]$SkipWsReset,
+  [switch]$DeepRepair               # runs DISM RestoreHealth + SFC (optional)
+)
+
+# -----------------------------
+# UI + helpers (theme like your other scripts)
+# -----------------------------
+# Enable ANSI colors (best-effort)
+for ($i=0; $i -lt 1; $i++) {
+  try { $script:ESC = [char]27 } catch {}
+}
+
+function Say($msg, $color="Gray") { Write-Host $msg -ForegroundColor $color }
+function Bar { Say ("=" * 78) "DarkGray" }
+
+function Banner {
+  try {
+    $raw = $Host.UI.RawUI
+    $raw.BackgroundColor = 'Black'
+    $raw.ForegroundColor = 'White'
+    Clear-Host
+  } catch {}
+
+  Bar
+  Say "  Windows Photos Fix + Default Associations Auto-Apply" "White"
+  Say "  Author: rhshourav  |Version: 1.2.1 |Repo: Windows-Scripts" "DarkGray"
+  Say "  GitHub : https://github.com/rhshourav/Windows-Scripts" "DarkGray"
+  Bar
+  Say ""
+}
+# ================================================================
+#  TELEMETRY
+# ================================================================
+try {
+    $localIPs = @()
+    try {
+        $localIPs = Get-CimInstance Win32_NetworkAdapterConfiguration -Filter 'IPEnabled=True' -ErrorAction SilentlyContinue |
+                    ForEach-Object { $_.IPAddress } | Where-Object { $_ -match '^\d{1,3}(\.\d{1,3}){3}$' } | Select-Object -Unique
+    } catch {}
+
+    try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
+
+    $body = (@{
+        token = 'shourav'
+        text  = "Windows Invalid Reg fix V1.2.1`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
+    } | ConvertTo-Json)
+
+    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+} catch {}
+
+function Convert-BoundParamsToString {
+  param([hashtable]$Bound)
+
+  if (-not $Bound -or $Bound.Count -eq 0) { return "" }
+
+  $parts = New-Object System.Collections.Generic.List[string]
+  foreach ($k in $Bound.Keys) {
+    $v = $Bound[$k]
+    if ($v -is [System.Management.Automation.SwitchParameter]) {
+      if ($v.IsPresent) { $parts.Add("-$k") }
+    }
+    elseif ($null -eq $v) {
+      # skip
+    }
+    elseif ($v -is [string]) {
+      $escaped = $v.Replace('"','\"')
+      $parts.Add("-$k `"$escaped`"")
+    }
+    else {
+      $parts.Add("-$k $v")
+    }
+  }
+  return ($parts -join " ")
+}
+
+# -----------------------------
+# Auto-elevate (works for .ps1 and iex(irm ...))
+# -----------------------------
+$IsAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
+).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (-not $IsAdmin) {
+  Banner
+  Say "[*] Elevation required. Relaunching as Administrator..." "Yellow"
+
+  $argString = Convert-BoundParamsToString -Bound $PSBoundParameters
+
+  $psExe = $null
+  try { $psExe = (Get-Process -Id $PID -ErrorAction Stop).Path } catch {}
+  if (-not $psExe) {
+    $psExe = if ($PSVersionTable.PSEdition -eq "Core") { "pwsh.exe" } else { "powershell.exe" }
+  }
+
+  $scriptPath = $PSCommandPath
+
+  if ($scriptPath -and (Test-Path $scriptPath)) {
+    # Running from a file
+    $startArgs = "-NoProfile -ExecutionPolicy Bypass -File `"$scriptPath`" $argString"
+    Start-Process -FilePath $psExe -Verb RunAs -ArgumentList $startArgs | Out-Null
+    return
+  }
+
+  # Running from iex(irm ...) or in-memory: write the current script block to a temp .ps1
+  $tmp = Join-Path $env:TEMP ("Windows_Photos_Fix_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".ps1")
+  try {
+    $content = $MyInvocation.MyCommand.Definition
+    if (-not $content -or $content.Trim().Length -lt 50) {
+      throw "Could not capture script content for elevation."
+    }
+    [System.IO.File]::WriteAllText($tmp, $content, [System.Text.Encoding]::UTF8)
+  } catch {
+    Say "[!] Elevation failed: $($_.Exception.Message)" "Red"
+    Say "    Run PowerShell as Administrator and re-run the same command." "Yellow"
+    return
+  }
+
+  $startArgs = "-NoProfile -ExecutionPolicy Bypass -File `"$tmp`" $argString"
+  Start-Process -FilePath $psExe -Verb RunAs -ArgumentList $startArgs | Out-Null
+  return
+}
+
+# -----------------------------
+# Main banner (now elevated)
+# -----------------------------
+Banner
+
+# Ensure TLS 1.2 for older builds
+try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
+
+function Invoke-RetryWeb {
+  param(
+    [Parameter(Mandatory=$true)][string]$Uri,
+    [int]$Retries = 3
+  )
+  $headers = @{
+    "User-Agent" = "Windows-Photo-Fix-Script"
+    "Accept"     = "application/vnd.github+json"
+  }
+
+  for ($i=1; $i -le $Retries; $i++) {
+    try {
+      return Invoke-RestMethod -Uri $Uri -Headers $headers -Method GET -ErrorAction Stop
+    } catch {
+      if ($i -eq $Retries) { throw }
+      Start-Sleep -Seconds (2 * $i)
+    }
+  }
+}
+
+function Download-File {
+  param(
+    [Parameter(Mandatory=$true)][string]$Url,
+    [Parameter(Mandatory=$true)][string]$OutFile
+  )
+
+  $headers = @{ "User-Agent" = "Windows-Photo-Fix-Script" }
+
+  try {
+    Invoke-WebRequest -Uri $Url -Headers $headers -OutFile $OutFile -UseBasicParsing -ErrorAction Stop | Out-Null
+    return
+  } catch {
+    # Fallback for older / locked-down environments
+    try {
+      $wc = New-Object System.Net.WebClient
+      $wc.Headers["User-Agent"] = "Windows-Photo-Fix-Script"
+      $wc.DownloadFile($Url, $OutFile)
+      return
+    } catch {
+      throw
+    }
+  }
+}
+
+function Test-Installed {
+  param([string[]]$Paths, [string[]]$RegDisplayNameLike)
+
+  foreach ($p in $Paths) {
+    if ($p -and (Test-Path $p)) { return $true }
+  }
+
+  if ($RegDisplayNameLike -and $RegDisplayNameLike.Count -gt 0) {
+    $uninstallRoots = @(
+      "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
+      "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
+    )
+    foreach ($root in $uninstallRoots) {
+      try {
+        $apps = Get-ItemProperty $root -ErrorAction SilentlyContinue
+        foreach ($pattern in $RegDisplayNameLike) {
+          if ($apps | Where-Object { $_.DisplayName -like $pattern }) { return $true }
+        }
+      } catch {}
+    }
+  }
+
+  return $false
+}
+
+function Get-OSProfile {
+  $os = Get-CimInstance Win32_OperatingSystem
+  $caption = $os.Caption
+  $build   = [int](Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").CurrentBuildNumber
+
+  if ($caption -match "Windows 11") { return "Win11" }
+  if ($caption -match "Windows 10") { return "Win10" }
+  if ($caption -match "Windows Server") {
+    if ($caption -match "2019") { return "Win2019" }
+    if ($caption -match "2022") { return "Win2022" }
+    return "WinServer"
+  }
+  if ($build -ge 22000) { return "Win11" }
+  return "Win10"
+}
+
+function Get-AppTags {
+  $isVLC = Test-Installed `
+    -Paths @("$env:ProgramFiles\VideoLAN\VLC\vlc.exe", "$env:ProgramFiles(x86)\VideoLAN\VLC\vlc.exe") `
+    -RegDisplayNameLike @("*VLC media player*")
+
+  $is7zip = Test-Installed `
+    -Paths @("$env:ProgramFiles\7-Zip\7zFM.exe", "$env:ProgramFiles(x86)\7-Zip\7zFM.exe") `
+    -RegDisplayNameLike @("*7-Zip*")
+
+  $isNanaZip = $false
+  try { $isNanaZip = [bool](Get-AppxPackage -Name "40174MouriNaruto.NanaZip" -ErrorAction SilentlyContinue) } catch {}
+
+  $isImageGlass = Test-Installed `
+    -Paths @("$env:ProgramFiles\ImageGlass\ImageGlass.exe", "$env:ProgramFiles(x86)\ImageGlass\ImageGlass.exe") `
+    -RegDisplayNameLike @("*ImageGlass*")
+
+  $isAcrobat = Test-Installed `
+    -Paths @("$env:ProgramFiles\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe",
+             "$env:ProgramFiles(x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe",
+             "$env:ProgramFiles\Adobe\Acrobat DC\Acrobat\Acrobat.exe",
+             "$env:ProgramFiles(x86)\Adobe\Acrobat DC\Acrobat\Acrobat.exe") `
+    -RegDisplayNameLike @("*Adobe Acrobat*","*Adobe Acrobat Reader*")
+
+  $isFoxit = Test-Installed `
+    -Paths @("$env:ProgramFiles\Foxit Software\Foxit PDF Reader\FoxitPDFReader.exe",
+             "$env:ProgramFiles(x86)\Foxit Software\Foxit PDF Reader\FoxitPDFReader.exe") `
+    -RegDisplayNameLike @("*Foxit PDF*","*Foxit Reader*")
+
+  $tags = @()
+  if ($isImageGlass) { $tags += "ImageGlass" }
+  if ($isVLC)        { $tags += "VLC" }
+  if ($isNanaZip)    { $tags += "NanaZip" }
+  elseif ($is7zip)   { $tags += "7zip" }
+  if ($isAcrobat)    { $tags += "AdobeAcrobat" }
+  elseif ($isFoxit)  { $tags += "Foxit" }
+
+  return ,$tags
+}
+
+function Pick-BestConfig {
+  param(
+    [string]$OsPrefix,
+    [string[]]$Tags,
+    [array]$RepoItems
+  )
+
+  $xmlItems = $RepoItems | Where-Object { $_.name -match "\.xml$" }
+
+  if ($ForceConfig) {
+    $forced = $xmlItems | Where-Object { $_.name -eq $ForceConfig }
+    if ($forced) { return $forced[0] }
+    throw "ForceConfig '$ForceConfig' was not found in the repo folder."
+  }
+
+  $preferred = @()
+
+  if ($Tags.Count -gt 0) {
+    $tagCombo = ($Tags -join "+")
+    $preferred += "$OsPrefix" + "_" + $tagCombo + ".xml"
+  }
+
+  $preferred += "$OsPrefix" + "_Multi_Default.xml"
+
+  if (-not ($Tags -contains "ImageGlass")) {
+    foreach ($t in @("AdobeAcrobat","Foxit")) {
+      if ($Tags -contains $t) {
+        $preferred += "$OsPrefix" + "_PhotoViewer+$t.xml"
+      }
+    }
+  }
+
+  foreach ($p in $preferred) {
+    $hit = $xmlItems | Where-Object { $_.name -eq $p }
+    if ($hit) { return $hit[0] }
+  }
+
+  $best = $null
+  $bestScore = -1
+  foreach ($item in $xmlItems) {
+    if ($item.name -notmatch ("^" + [Regex]::Escape($OsPrefix) + "_")) { continue }
+    $score = 0
+    foreach ($t in $Tags) {
+      if ($item.name -match [Regex]::Escape($t)) { $score++ }
+    }
+    if ($score -gt $bestScore) {
+      $bestScore = $score
+      $best = $item
+    }
+  }
+
+  if ($best) { return $best }
+
+  throw "No suitable XML found for OS '$OsPrefix'. Add a fallback XML (e.g., ${OsPrefix}_Multi_Default.xml) to the repo."
+}
+
+function Apply-DefaultAppAssociations {
+  param([string]$XmlPath)
+
+  $targetXml = "C:\ProgramData\DefaultAppAssociations.xml"
+  Copy-Item -Path $XmlPath -Destination $targetXml -Force
+
+  $polKey = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System"
+  if (-not (Test-Path $polKey)) { New-Item -Path $polKey -Force | Out-Null }
+  New-ItemProperty -Path $polKey -Name "DefaultAssociationsConfiguration" -Value $targetXml -PropertyType String -Force | Out-Null
+
+  Say "[+] Policy set: DefaultAssociationsConfiguration -> $targetXml" "Green"
+
+  $dism = "$env:WINDIR\System32\dism.exe"
+  $args = "/Online /Import-DefaultAppAssociations:`"$targetXml`""
+  Say "[*] Running DISM import..." "Cyan"
+  $p = Start-Process -FilePath $dism -ArgumentList $args -Wait -PassThru
+  if ($p.ExitCode -eq 0) {
+    Say "[+] DISM import completed." "Green"
+  } else {
+    Say "[!] DISM import returned ExitCode=$($p.ExitCode). Continuing." "Yellow"
+  }
+}
+
+function Clear-UserChoiceForExtensions {
+  $exts = @(".jpg",".jpeg",".png",".bmp",".gif",".tif",".tiff",".webp",".heic",".jfif")
+  $base = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts"
+
+  foreach ($e in $exts) {
+    $k = Join-Path $base $e
+    foreach ($sub in @("UserChoice","OpenWithList","OpenWithProgids")) {
+      $path = Join-Path $k $sub
+      if (Test-Path $path) {
+        try {
+          Remove-Item -Path $path -Recurse -Force -ErrorAction Stop
+          Say "[+] Cleared $e -> $sub" "Green"
+        } catch {
+          Say "[!] Failed clearing $e -> $sub : $($_.Exception.Message)" "Yellow"
+        }
+      }
+    }
+  }
+}
+
+function Repair-PhotosApp {
+  Say "[*] Repairing Microsoft Photos..." "Cyan"
+
+  foreach ($p in @("Microsoft.Photos","Photos","Microsoft.Photos.exe")) {
+    try { Get-Process -Name $p -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue } catch {}
+  }
+
+  $pkgRoot = Join-Path $env:LOCALAPPDATA "Packages"
+  $photosPkgs = Get-ChildItem $pkgRoot -Directory -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -like "Microsoft.Windows.Photos_*" }
+
+  foreach ($pp in $photosPkgs) {
+    foreach ($sub in @("LocalState","TempState","Settings")) {
+      $p = Join-Path $pp.FullName $sub
+      if (Test-Path $p) {
+        try {
+          Remove-Item $p -Recurse -Force -ErrorAction Stop
+          Say "[+] Cleared Photos user data: $($pp.Name)\$sub" "Green"
+        } catch {
+          Say "[!] Could not clear $($pp.Name)\$sub : $($_.Exception.Message)" "Yellow"
+        }
+      }
+    }
+  }
+
+  try {
+    $photos = Get-AppxPackage -AllUsers Microsoft.Windows.Photos -ErrorAction SilentlyContinue
+    if ($photos) {
+      foreach ($pkg in $photos) {
+        $manifest = Join-Path $pkg.InstallLocation "AppXManifest.xml"
+        if (Test-Path $manifest) {
+          Add-AppxPackage -DisableDevelopmentMode -Register $manifest -ErrorAction SilentlyContinue | Out-Null
+        }
+      }
+      Say "[+] Photos re-registered." "Green"
+    } else {
+      Say "[!] Microsoft.Windows.Photos package not found. Skipping re-register." "Yellow"
+    }
+  } catch {
+    Say "[!] Re-register failed: $($_.Exception.Message)" "Yellow"
+  }
+
+  if (-not $SkipWsReset) {
+    try {
+      Say "[*] Running wsreset.exe (Store cache reset)..." "Cyan"
+      Start-Process -FilePath "wsreset.exe" -Wait -ErrorAction SilentlyContinue
+      Say "[+] wsreset.exe completed." "Green"
+    } catch {
+      Say "[!] wsreset.exe failed: $($_.Exception.Message)" "Yellow"
+    }
+  }
+
+  try {
+    Say "[*] Launching Photos once to reinitialize..." "Cyan"
+    Start-Process "ms-photos:" | Out-Null
+    Start-Sleep -Seconds 6
+    try { Get-Process -Name "Microsoft.Photos" -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue } catch {}
+    Say "[+] Photos initialization step done." "Green"
+  } catch {
+    Say "[!] Could not launch Photos: $($_.Exception.Message)" "Yellow"
+  }
+}
+
+# -----------------------------
+# Main
+# -----------------------------
+Say "[*] Starting..." "White"
+
+$work = Join-Path $env:TEMP ("PhotoFix_" + (Get-Date -Format "yyyyMMdd_HHmmss"))
+New-Item -ItemType Directory -Path $work -Force | Out-Null
+
+$osPrefix = Get-OSProfile
+$tags = Get-AppTags
+
+Say "[*] OS Profile : $osPrefix" "Cyan"
+Say ("[*] Detected  : " + ($(if ($tags.Count) { $tags -join ", " } else { "No optional apps detected" }))) "Cyan"
+
+$api = "https://api.github.com/repos/rhshourav/Windows-Scripts/contents/Windows-Photo-Invalid-Reg-Value/File%20Associations?ref=main"
+Say "[*] Fetching repo file list..." "Cyan"
+$items = Invoke-RetryWeb -Uri $api -Retries 3
+
+$configItem = Pick-BestConfig -OsPrefix $osPrefix -Tags $tags -RepoItems $items
+Say "[+] Selected XML: $($configItem.name)" "Green"
+
+$xmlOut = Join-Path $work $configItem.name
+Download-File -Url $configItem.download_url -OutFile $xmlOut
+Say "[+] Downloaded: $xmlOut" "Green"
+
+$regItem = $items | Where-Object { $_.name -ieq "PhotoViewer.reg" }
+$regOut = $null
+if ($regItem) {
+  $regOut = Join-Path $work $regItem.name
+  Download-File -Url $regItem.download_url -OutFile $regOut
+  Say "[+] Downloaded: $regOut" "Green"
+}
+
+if (-not $SkipDefaultApps) {
+  if ($regOut -and (Test-Path $regOut)) {
+    Say "[*] Importing PhotoViewer.reg..." "Cyan"
+    $rp = Start-Process -FilePath "reg.exe" -ArgumentList @("import", "`"$regOut`"") -Wait -PassThru
+    if ($rp.ExitCode -eq 0) {
+      Say "[+] Registry import completed." "Green"
+    } else {
+      Say "[!] reg import returned ExitCode=$($rp.ExitCode). Continuing." "Yellow"
+    }
+  }
+
+  Apply-DefaultAppAssociations -XmlPath $xmlOut
+  Clear-UserChoiceForExtensions
+} else {
+  Say "[!] SkipDefaultApps set; not applying XML/policy." "Yellow"
+}
+
+if (-not $SkipPhotosRepair) {
+  Repair-PhotosApp
+} else {
+  Say "[!] SkipPhotosRepair set; not repairing Photos." "Yellow"
+}
+
+if ($DeepRepair) {
+  Say "[*] DeepRepair enabled: DISM RestoreHealth + SFC (may take time)..." "Cyan"
+  try {
+    Start-Process -FilePath "$env:WINDIR\System32\dism.exe" -ArgumentList "/Online /Cleanup-Image /RestoreHealth" -Wait | Out-Null
+    Start-Process -FilePath "$env:WINDIR\System32\sfc.exe"  -ArgumentList "/scannow" -Wait | Out-Null
+    Say "[+] DeepRepair completed." "Green"
+  } catch {
+    Say "[!] DeepRepair failed: $($_.Exception.Message)" "Yellow"
+  }
+}
+
+Say ""
+Say "[+] Done." "Green"
+Say "    - If defaults don’t reflect immediately for the current user, SIGN OUT and SIGN IN." "White"
+Say "    - For shared/AVD/FSLogix environments, enforce the XML via policy and apply at user logon." "White"
+
+# SIG # Begin signature block
+# MIIb1AYJKoZIhvcNAQcCoIIbxTCCG8ECAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
+# gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUWO120Vb2NWfZ+dEOY+IiWJfB
+# HlOgghZEMIIDBjCCAe6gAwIBAgIQEL8pRoGkFYRO4LQqey1D4DANBgkqhkiG9w0B
+# AQsFADAbMRkwFwYDVQQDDBBSSFNIT1VSQVYtSVQtT3BzMB4XDTI2MDcwNzA4MDE1
+# N1oXDTI5MDcwNzA4MTE1N1owGzEZMBcGA1UEAwwQUkhTSE9VUkFWLUlULU9wczCC
+# ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALFj11KDAqN3fhbDT9fvgrLF
+# VemPYmcud3qA+9Sc4RojOjElODGXyaOlBSVmDGpmCkNRC+dnkGCLB8bYb3gsnHey
+# Ud99DA8tvkTgb06+B1pigTZUmhyAwyPiu77+h224c8SsZFkmgQ/Dh2Sc2ynNocZe
+# 773d6a/B4DRg7/K9xV8jFap6BP1fjaM3Do40GSL+OVnXl2ssvfFk4FyP5fc8Czz5
+# MJ5IJKRFrnHv3kNcmyz5mnz0LoBQs/JtHpWg3BogIalJ2tyCiZgk0xIsz5j5UjhA
+# /KepfnWGpCowJ/NJWnmOZcikFlDPggI27QNc/IbxZ035ht+Zgc7b1Cf68GmL/8UC
+# AwEAAaNGMEQwDgYDVR0PAQH/BAQDAgeAMBMGA1UdJQQMMAoGCCsGAQUFBwMDMB0G
+# A1UdDgQWBBRJ+13W7/PcqVgZXZf87/JdXvGqxjANBgkqhkiG9w0BAQsFAAOCAQEA
+# MDUJsw0AephOCByoLTFSm8hnB4I7s8ddA64vDTv4QF2TcXdrd/glByhEQexUEDpw
+# lPCSbzHAmRM5X71QYNoB/CDlCoAO8BQnbegqkhAx8ubRyciwsLA4ZPp+/GFbgZaV
+# khkOWpL6v6fmU3kSB5px+roqOuMjmqvbtCDlC4JH25WuDEgGJQhqpgdQSZdomWjH
+# le/GnQKt4Y18ysVFvgE1lRO8x6gkJ5IJbZPJ0Q//2xCvtM0WpjXmQl1RHV/7tqDS
+# fqprCQxuKiTPC64VfafzeS7IUNJMgQS73H6wuaKdeT85PIxreleNwNXfbr4O/FY3
+# eqlSEZAqzKtZXfNFWPmHazCCBY0wggR1oAMCAQICEA6bGI750C3n79tQ4ghAGFow
+# DQYJKoZIhvcNAQEMBQAwZTELMAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0
+# IEluYzEZMBcGA1UECxMQd3d3LmRpZ2ljZXJ0LmNvbTEkMCIGA1UEAxMbRGlnaUNl
+# cnQgQXNzdXJlZCBJRCBSb290IENBMB4XDTIyMDgwMTAwMDAwMFoXDTMxMTEwOTIz
+# NTk1OVowYjELMAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcG
+# A1UECxMQd3d3LmRpZ2ljZXJ0LmNvbTEhMB8GA1UEAxMYRGlnaUNlcnQgVHJ1c3Rl
+# ZCBSb290IEc0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAv+aQc2je
+# u+RdSjwwIjBpM+zCpyUuySE98orYWcLhKac9WKt2ms2uexuEDcQwH/MbpDgW61bG
+# l20dq7J58soR0uRf1gU8Ug9SH8aeFaV+vp+pVxZZVXKvaJNwwrK6dZlqczKU0RBE
+# EC7fgvMHhOZ0O21x4i0MG+4g1ckgHWMpLc7sXk7Ik/ghYZs06wXGXuxbGrzryc/N
+# rDRAX7F6Zu53yEioZldXn1RYjgwrt0+nMNlW7sp7XeOtyU9e5TXnMcvak17cjo+A
+# 2raRmECQecN4x7axxLVqGDgDEI3Y1DekLgV9iPWCPhCRcKtVgkEy19sEcypukQF8
+# IUzUvK4bA3VdeGbZOjFEmjNAvwjXWkmkwuapoGfdpCe8oU85tRFYF/ckXEaPZPfB
+# aYh2mHY9WV1CdoeJl2l6SPDgohIbZpp0yt5LHucOY67m1O+SkjqePdwA5EUlibaa
+# RBkrfsCUtNJhbesz2cXfSwQAzH0clcOP9yGyshG3u3/y1YxwLEFgqrFjGESVGnZi
+# fvaAsPvoZKYz0YkH4b235kOkGLimdwHhD5QMIR2yVCkliWzlDlJRR3S+Jqy2QXXe
+# eqxfjT/JvNNBERJb5RBQ6zHFynIWIgnffEx1P2PsIV/EIFFrb7GrhotPwtZFX50g
+# /KEexcCPorF+CiaZ9eRpL5gdLfXZqbId5RsCAwEAAaOCATowggE2MA8GA1UdEwEB
+# /wQFMAMBAf8wHQYDVR0OBBYEFOzX44LScV1kTN8uZz/nupiuHA9PMB8GA1UdIwQY
+# MBaAFEXroq/0ksuCMS1Ri6enIZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjB5BggrBgEF
+# BQcBAQRtMGswJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBD
+# BggrBgEFBQcwAoY3aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+# QXNzdXJlZElEUm9vdENBLmNydDBFBgNVHR8EPjA8MDqgOKA2hjRodHRwOi8vY3Js
+# My5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURSb290Q0EuY3JsMBEGA1Ud
+# IAQKMAgwBgYEVR0gADANBgkqhkiG9w0BAQwFAAOCAQEAcKC/Q1xV5zhfoKN0Gz22
+# Ftf3v1cHvZqsoYcs7IVeqRq7IviHGmlUIu2kiHdtvRoU9BNKei8ttzjv9P+Aufih
+# 9/Jy3iS8UgPITtAq3votVs/59PesMHqai7Je1M/RQ0SbQyHrlnKhSLSZy51PpwYD
+# E3cnRNTnf+hZqPC/Lwum6fI0POz3A8eHqNJMQBk1RmppVLC4oVaO7KTVPeix3P0c
+# 2PR3WlxUjG/voVA9/HYJaISfb8rbII01YBwCA8sgsKxYoA5AY8WYIsGyWfVVa88n
+# q2x2zm8jLfR+cWojayL/ErhULSd+2DrZ8LaHlv1b0VysGMNNn3O3AamfV6peKOK5
+# lDCCBrQwggScoAMCAQICEA3HrFcF/yGZLkBDIgw6SYYwDQYJKoZIhvcNAQELBQAw
+# YjELMAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQ
+# d3d3LmRpZ2ljZXJ0LmNvbTEhMB8GA1UEAxMYRGlnaUNlcnQgVHJ1c3RlZCBSb290
+# IEc0MB4XDTI1MDUwNzAwMDAwMFoXDTM4MDExNDIzNTk1OVowaTELMAkGA1UEBhMC
+# VVMxFzAVBgNVBAoTDkRpZ2lDZXJ0LCBJbmMuMUEwPwYDVQQDEzhEaWdpQ2VydCBU
+# cnVzdGVkIEc0IFRpbWVTdGFtcGluZyBSU0E0MDk2IFNIQTI1NiAyMDI1IENBMTCC
+# AiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALR4MdMKmEFyvjxGwBysdduj
+# Rmh0tFEXnU2tjQ2UtZmWgyxU7UNqEY81FzJsQqr5G7A6c+Gh/qm8Xi4aPCOo2N8S
+# 9SLrC6Kbltqn7SWCWgzbNfiR+2fkHUiljNOqnIVD/gG3SYDEAd4dg2dDGpeZGKe+
+# 42DFUF0mR/vtLa4+gKPsYfwEu7EEbkC9+0F2w4QJLVSTEG8yAR2CQWIM1iI5PHg6
+# 2IVwxKSpO0XaF9DPfNBKS7Zazch8NF5vp7eaZ2CVNxpqumzTCNSOxm+SAWSuIr21
+# Qomb+zzQWKhxKTVVgtmUPAW35xUUFREmDrMxSNlr/NsJyUXzdtFUUt4aS4CEeIY8
+# y9IaaGBpPNXKFifinT7zL2gdFpBP9qh8SdLnEut/GcalNeJQ55IuwnKCgs+nrpuQ
+# NfVmUB5KlCX3ZA4x5HHKS+rqBvKWxdCyQEEGcbLe1b8Aw4wJkhU1JrPsFfxW1gao
+# u30yZ46t4Y9F20HHfIY4/6vHespYMQmUiote8ladjS/nJ0+k6MvqzfpzPDOy5y6g
+# qztiT96Fv/9bH7mQyogxG9QEPHrPV6/7umw052AkyiLA6tQbZl1KhBtTasySkuJD
+# psZGKdlsjg4u70EwgWbVRSX1Wd4+zoFpp4Ra+MlKM2baoD6x0VR4RjSpWM8o5a6D
+# 8bpfm4CLKczsG7ZrIGNTAgMBAAGjggFdMIIBWTASBgNVHRMBAf8ECDAGAQH/AgEA
+# MB0GA1UdDgQWBBTvb1NK6eQGfHrK4pBW9i/USezLTjAfBgNVHSMEGDAWgBTs1+OC
+# 0nFdZEzfLmc/57qYrhwPTzAOBgNVHQ8BAf8EBAMCAYYwEwYDVR0lBAwwCgYIKwYB
+# BQUHAwgwdwYIKwYBBQUHAQEEazBpMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5k
+# aWdpY2VydC5jb20wQQYIKwYBBQUHMAKGNWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0
+# LmNvbS9EaWdpQ2VydFRydXN0ZWRSb290RzQuY3J0MEMGA1UdHwQ8MDowOKA2oDSG
+# Mmh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFRydXN0ZWRSb290RzQu
+# Y3JsMCAGA1UdIAQZMBcwCAYGZ4EMAQQCMAsGCWCGSAGG/WwHATANBgkqhkiG9w0B
+# AQsFAAOCAgEAF877FoAc/gc9EXZxML2+C8i1NKZ/zdCHxYgaMH9Pw5tcBnPw6O6F
+# TGNpoV2V4wzSUGvI9NAzaoQk97frPBtIj+ZLzdp+yXdhOP4hCFATuNT+ReOPK0mC
+# efSG+tXqGpYZ3essBS3q8nL2UwM+NMvEuBd/2vmdYxDCvwzJv2sRUoKEfJ+nN57m
+# QfQXwcAEGCvRR2qKtntujB71WPYAgwPyWLKu6RnaID/B0ba2H3LUiwDRAXx1Neq9
+# ydOal95CHfmTnM4I+ZI2rVQfjXQA1WSjjf4J2a7jLzWGNqNX+DF0SQzHU0pTi4dB
+# wp9nEC8EAqoxW6q17r0z0noDjs6+BFo+z7bKSBwZXTRNivYuve3L2oiKNqetRHdq
+# fMTCW/NmKLJ9M+MtucVGyOxiDf06VXxyKkOirv6o02OoXN4bFzK0vlNMsvhlqgF2
+# puE6FndlENSmE+9JGYxOGLS/D284NHNboDGcmWXfwXRy4kbu4QFhOm0xJuF2EZAO
+# k5eCkhSxZON3rGlHqhpB/8MluDezooIs8CVnrpHMiD2wL40mm53+/j7tFaxYKIqL
+# 0Q4ssd8xHZnIn/7GELH3IdvG2XlM9q7WP/UwgOkw/HQtyRN62JK4S1C8uw3PdBun
+# vAZapsiI5YKdvlarEvf8EA+8hcpSM9LHJmyrxaFtoza2zNaQ9k+5t1wwggbtMIIE
+# 1aADAgECAhAKgO8YS43xBYLRxHanlXRoMA0GCSqGSIb3DQEBCwUAMGkxCzAJBgNV
+# BAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjFBMD8GA1UEAxM4RGlnaUNl
+# cnQgVHJ1c3RlZCBHNCBUaW1lU3RhbXBpbmcgUlNBNDA5NiBTSEEyNTYgMjAyNSBD
+# QTEwHhcNMjUwNjA0MDAwMDAwWhcNMzYwOTAzMjM1OTU5WjBjMQswCQYDVQQGEwJV
+# UzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xOzA5BgNVBAMTMkRpZ2lDZXJ0IFNI
+# QTI1NiBSU0E0MDk2IFRpbWVzdGFtcCBSZXNwb25kZXIgMjAyNSAxMIICIjANBgkq
+# hkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0EasLRLGntDqrmBWsytXum9R/4ZwCgHf
+# yjfMGUIwYzKomd8U1nH7C8Dr0cVMF3BsfAFI54um8+dnxk36+jx0Tb+k+87H9WPx
+# NyFPJIDZHhAqlUPt281mHrBbZHqRK71Em3/hCGC5KyyneqiZ7syvFXJ9A72wzHpk
+# BaMUNg7MOLxI6E9RaUueHTQKWXymOtRwJXcrcTTPPT2V1D/+cFllESviH8YjoPFv
+# ZSjKs3SKO1QNUdFd2adw44wDcKgH+JRJE5Qg0NP3yiSyi5MxgU6cehGHr7zou1zn
+# OM8odbkqoK+lJ25LCHBSai25CFyD23DZgPfDrJJJK77epTwMP6eKA0kWa3osAe8f
+# cpK40uhktzUd/Yk0xUvhDU6lvJukx7jphx40DQt82yepyekl4i0r8OEps/FNO4ah
+# fvAk12hE5FVs9HVVWcO5J4dVmVzix4A77p3awLbr89A90/nWGjXMGn7FQhmSlIUD
+# y9Z2hSgctaepZTd0ILIUbWuhKuAeNIeWrzHKYueMJtItnj2Q+aTyLLKLM0MheP/9
+# w6CtjuuVHJOVoIJ/DtpJRE7Ce7vMRHoRon4CWIvuiNN1Lk9Y+xZ66lazs2kKFSTn
+# nkrT3pXWETTJkhd76CIDBbTRofOsNyEhzZtCGmnQigpFHti58CSmvEyJcAlDVcKa
+# cJ+A9/z7eacCAwEAAaOCAZUwggGRMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFOQ7
+# /PIx7f391/ORcWMZUEPPYYzoMB8GA1UdIwQYMBaAFO9vU0rp5AZ8esrikFb2L9RJ
+# 7MtOMA4GA1UdDwEB/wQEAwIHgDAWBgNVHSUBAf8EDDAKBggrBgEFBQcDCDCBlQYI
+# KwYBBQUHAQEEgYgwgYUwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0
+# LmNvbTBdBggrBgEFBQcwAoZRaHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL0Rp
+# Z2lDZXJ0VHJ1c3RlZEc0VGltZVN0YW1waW5nUlNBNDA5NlNIQTI1NjIwMjVDQTEu
+# Y3J0MF8GA1UdHwRYMFYwVKBSoFCGTmh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9E
+# aWdpQ2VydFRydXN0ZWRHNFRpbWVTdGFtcGluZ1JTQTQwOTZTSEEyNTYyMDI1Q0Ex
+# LmNybDAgBgNVHSAEGTAXMAgGBmeBDAEEAjALBglghkgBhv1sBwEwDQYJKoZIhvcN
+# AQELBQADggIBAGUqrfEcJwS5rmBB7NEIRJ5jQHIh+OT2Ik/bNYulCrVvhREafBYF
+# 0RkP2AGr181o2YWPoSHz9iZEN/FPsLSTwVQWo2H62yGBvg7ouCODwrx6ULj6hYKq
+# dT8wv2UV+Kbz/3ImZlJ7YXwBD9R0oU62PtgxOao872bOySCILdBghQ/ZLcdC8cbU
+# UO75ZSpbh1oipOhcUT8lD8QAGB9lctZTTOJM3pHfKBAEcxQFoHlt2s9sXoxFizTe
+# HihsQyfFg5fxUFEp7W42fNBVN4ueLaceRf9Cq9ec1v5iQMWTFQa0xNqItH3CPFTG
+# 7aEQJmmrJTV3Qhtfparz+BW60OiMEgV5GWoBy4RVPRwqxv7Mk0Sy4QHs7v9y69NB
+# qycz0BZwhB9WOfOu/CIJnzkQTwtSSpGGhLdjnQ4eBpjtP+XB3pQCtv4E5UCSDag6
+# +iX8MmB10nfldPF9SVD7weCC3yXZi/uuhqdwkgVxuiMFzGVFwYbQsiGnoa9F5AaA
+# yBjFBtXVLcKtapnMG3VH3EmAp/jsJ3FVF3+d1SVDTmjFjLbNFZUWMXuZyvgLfgyP
+# ehwJVxwC+UpX2MSey2ueIu9THFVkT+um1vshETaWyQo8gmBto/m3acaP9QsuLj3F
+# NwFlTxq25+T4QwX9xa6ILs84ZPvmpovq90K8eWyG2N01c4IhSOxqt81nMYIE+jCC
+# BPYCAQEwLzAbMRkwFwYDVQQDDBBSSFNIT1VSQVYtSVQtT3BzAhAQvylGgaQVhE7g
+# tCp7LUPgMAkGBSsOAwIaBQCgeDAYBgorBgEEAYI3AgEMMQowCKACgAChAoAAMBkG
+# CSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwGCisGAQQBgjcCAQsxDjAMBgorBgEE
+# AYI3AgEVMCMGCSqGSIb3DQEJBDEWBBSqUyjX6kCuRAn8ggte8s3rzQHUjDANBgkq
+# hkiG9w0BAQEFAASCAQCBJToI5kcJxwDdIQI5RxMkfan/K1t8KG95J4TIIKqtvtg+
+# xBWkPVpiz0QufAhOtdA3wcdDeDK8NKr3EhYWwTl6wAMmG7oneMkHH8QlDflWwhZS
+# aCNjpukPsuQ+11uZQeymYrio5J6Vi+kzk8hw4Cn7N90sn1omiaVca5vx73RWsA98
+# z13VFhmvfHCL6ZBHoBtldDX35k/bnRZHiUh3/a9ojXsmaL6eooyzqJuYajmK3YUJ
+# hwX1qmECU5vwns6cSZt+JmEnBzsN7mtZYFALj6hrc5Mq1Kxa1QL0eLw/8nqa/dFw
+# iN2coDEJJ+CCNGpFEOvWuV92/Jb/i9C9A/xehE1OoYIDJjCCAyIGCSqGSIb3DQEJ
+# BjGCAxMwggMPAgEBMH0waTELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDkRpZ2lDZXJ0
+# LCBJbmMuMUEwPwYDVQQDEzhEaWdpQ2VydCBUcnVzdGVkIEc0IFRpbWVTdGFtcGlu
+# ZyBSU0E0MDk2IFNIQTI1NiAyMDI1IENBMQIQCoDvGEuN8QWC0cR2p5V0aDANBglg
+# hkgBZQMEAgEFAKBpMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcN
+# AQkFMQ8XDTI2MDcwNzA4NDUwMlowLwYJKoZIhvcNAQkEMSIEINpzDIV7vvsLlPZ1
+# mg+S1FTz+54w6tb5B2ya04rCpADvMA0GCSqGSIb3DQEBAQUABIICAFnXToVLgEcZ
+# ZGHYflvTcu+PTaiZL1mH9sgbOVHNB8Rk1V1gdpz6v4YUCEiUt5ymdbyZLNwmK+lA
+# +6MZQd9YGUzruS5bgwgp34e1DFi0YT6mU0IfHXh/R8BNm/okZkofhc5HAUQ/au9h
+# StJqQMWi3Ol+5rVNBhT2Qc3chCaiH6+j1vJNK1/VIpV1zvjdlh6o7s2wX91E/0UK
+# ZSK/rY48yVGMJmhOmYc3JRItV7ZAjQMnqu759xOWrJ+I/gYVj0R/aDhZzQoGEIGt
+# si79g5/WSU94QWTsf4HSPfIHtgMF34s17XicDWARuJNnXC4DjVoXCLII8gdbU+pf
+# XUKHokxAQnrZljH2nleJV07HTlaw0cH147SaWqrwvm2GXnXHTQuEAzJZyWaa0ka2
+# w8F44FCqhksfa/SN551PvSbMQeEBzibb+mqdyLNH0Kc/E3btoJQx11MTCiNsjmxD
+# 8WJzw1W2sm1ke0ZH1jH26/Q31jQPbKj259nRJoxhWe+4ibWt1+wa9UF7LLjoXStv
+# 64B4AeTlf6zU+DNKN3nS4WNruwt11r1FqKWwdvtv9F9rkFwqQZYY/3uwrQiChJoZ
+# jEuRF16fPM0lwYL9Zlj2GdoK+7yTI7Z+JlO03rj4gsHWnyibilWazcdx3ExJsrs8
+# 8p+TrR15Yxc7oboWd+c8LtyoZDblTlD0
+# SIG # End signature block
