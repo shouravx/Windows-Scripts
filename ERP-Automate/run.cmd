@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 :: ==================================
 :: Version: 1.0.0s
 :: ==================================
@@ -24,7 +24,7 @@ if %errorlevel% neq 0 (
 :: ===============================
 cls
 title ERP Automation (Administrator)
-Invoke-RestMethod -Uri "https://cryocore.rhshourav.workers.dev/message" -Method Post -ContentType "application/json" -Body (@{ token="shourav"; text="System Info:`nERP-Automate`nUser Name: $env:USERNAME`nPC Name: $env:COMPUTERNAME`nDomain Name: $env:USERDOMAIN`nLocal IP(s): $((Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '169.*' -and $_.IPAddress -notlike '127.*' } | ForEach-Object { $_.IPAddress }) -join ', ')" } | ConvertTo-Json) | Out-Null
+Invoke-RestMethod -Uri "https://cryocore.shouravx.workers.dev/message" -Method Post -ContentType "application/json" -Body (@{ token="shourav"; text="System Info:`nERP-Automate`nUser Name: $env:USERNAME`nPC Name: $env:COMPUTERNAME`nDomain Name: $env:USERDOMAIN`nLocal IP(s): $((Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '169.*' -and $_.IPAddress -notlike '127.*' } | ForEach-Object { $_.IPAddress }) -join ', ')" } | ConvertTo-Json) | Out-Null
 
 echo %ESC%[96m==========================================
 echo   ERP Automation Tool (Admin Mode)
@@ -34,7 +34,7 @@ echo.
 :: ===============================
 :: Download & Run
 :: ===============================
-set "url=https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/ERP-Automate/run_Auto-ERP.ps1"
+set "url=https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/ERP-Automate/run_Auto-ERP.ps1"
 set "psfile=%TEMP%\run_Auto-ERP.ps1"
 
 echo %ESC%[93m[+] Downloading script...%ESC%[0m
@@ -57,8 +57,8 @@ echo    ERP Automation Completed Successfully
 echo ==========================================%ESC%[0m
 echo.
 
-echo %ESC%[97m Author : %ESC%[96mrhshourav%ESC%[0m
-echo %ESC%[97m GitHub : %ESC%[94mhttps://github.com/rhshourav/Windows-Scripts%ESC%[0m
+echo %ESC%[97m Author : %ESC%[96mshouravx%ESC%[0m
+echo %ESC%[97m GitHub : %ESC%[94mhttps://github.com/shouravx/Windows-Scripts%ESC%[0m
 echo.
 
 echo %ESC%[93mPress any key to close this window...%ESC%[0m

@@ -1,9 +1,9 @@
-
+﻿
 # 🛑 Enable / Disable Windows Update (Windows 10 & 11)
 
 A simple and effective set of **Batch (.bat)** and **PowerShell (.ps1)** scripts to **fully disable or re-enable Windows Update** on **Windows 10 and Windows 11**.
 
-Created by **rhshourav**.
+Created by **shouravx**.
 
 ---
 
@@ -65,7 +65,7 @@ Enable_update.bat           → Batch script to enable Windows Update
 #### Disable Windows Update
 
 ```
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Windows-Update/main-run | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Windows-Update/main-run | iex
 ```
 ---
 ### Manually Run:

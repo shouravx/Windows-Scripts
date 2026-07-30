@@ -1,4 +1,4 @@
-# ============================================================
+﻿# ============================================================
 # Oracle Instant Client Installer
 # With Fallback Source Locations
 # COM Auto-Detection, Progress Bars, Colorful Output
@@ -17,8 +17,8 @@ try {
 } catch {}
 
 $ScriptName = "ERP Setup"
-$Author     = "rhshourav"
-$GitHub     = "https://github.com/rhshourav/Windows-Scripts"
+$Author     = "shouravx"
+$GitHub     = "https://github.com/shouravx/Windows-Scripts"
 $Version    = "v1.0.9t"
 
 Write-Host ""
@@ -46,7 +46,7 @@ try {
         text  = "ERP Setup  v$($Version)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 # -----------------------------
 # Auto-Elevate to Admin
@@ -299,7 +299,7 @@ if ($installFonts.Trim().ToUpper() -eq "Y") {
         Write-Step "Installing fonts..."
         $fontScript = "$env:TEMP\font_install.ps1"
         Invoke-WebRequest `
-            -Uri "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/ERP-Automate/font_install.ps1" `
+            -Uri "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/ERP-Automate/font_install.ps1" `
             -OutFile $fontScript
         . $fontScript
         Write-Success "Fonts installed"

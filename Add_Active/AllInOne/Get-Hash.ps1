@@ -1,5 +1,5 @@
-# Download file
-$response = Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Add_Active/AllInOne/AIO.cmd'
+﻿# Download file
+$response = Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Add_Active/AllInOne/AIO.cmd'
 
 # Normalize exactly as the script does
 $response = $response -replace "`r?`n", "`r`n"

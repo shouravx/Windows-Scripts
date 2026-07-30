@@ -1,15 +1,15 @@
-# 🚀 Install-MediCatUSB (by rhshourav)
+﻿# 🚀 Install-MediCatUSB (by shouravx)
 
 A professional, automated wrapper for the **MediCat USB Installer**. This script simplifies the process of creating a bootable MediCat USB drive by handling dependencies, Ventoy installation, and file extraction via a clean, interactive PowerShell and Batch interface.
 
-Part of the [Windows-Scripts](https://www.google.com/search?q=https://github.com/rhshourav/Windows-Scripts) collection.
+Part of the [Windows-Scripts](https://www.google.com/search?q=https://github.com/shouravx/Windows-Scripts) collection.
 
 ## ⚡ Quick Start (PowerShell)
 
 Open **PowerShell** as Administrator and paste the following command to begin:
 
 ```powershell
-iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Install-MediCatUSB/Run-MediCat.ps1)
+iex (irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Install-MediCatUSB/Run-MediCat.ps1)
 
 ```
 
@@ -50,9 +50,9 @@ iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Instal
 
 * **Original Tool:** MediCat USB by **Jayro**.
 * **Installer Logic:** Original batch installer by **Mon5termatt**.
-* **Modifications:** Customized for the **rhshourav** Windows-Scripts repository.
+* **Modifications:** Customized for the **shouravx** Windows-Scripts repository.
 
 ## 🔗 Links
 
 * [Official MediCat Website](https://medicatusb.com/)
-* [My GitHub Profile](https://github.com/rhshourav)
+* [My GitHub Profile](https://github.com/shouravx)

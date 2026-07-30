@@ -1,4 +1,4 @@
-<# 
+﻿<# 
 .SYNOPSIS
   Windows Scripts - Registry + folder migration tool
 
@@ -18,7 +18,7 @@
   - interactive mode and folder selection
 
 .AUTHOR
-  rhshourav
+  shouravx
 
 .PACKAGE
   Part of Windows Scripts
@@ -28,7 +28,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $script:ToolName = 'Windows Scripts - Registry Migration'
-$script:Author   = 'rhshourav'
+$script:Author   = 'shouravx'
 $script:Version  = '1.1.0'
 $script:LogFile  = $null
 $script:SessionRoot = $null

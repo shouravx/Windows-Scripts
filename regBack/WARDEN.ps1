@@ -1,15 +1,15 @@
-#Requires -Version 5.0
+﻿#Requires -Version 5.0
 <#
 ================================================================================
   WARDEN - Windows Advanced Registry Defense, Export & Restoration Nexus
   Part of Windows Scripts Repository
 ================================================================================
-  Author      : rhshourav
-  Repository  : https://github.com/rhshourav/WindowsScripts
+  Author      : shouravx
+  Repository  : https://github.com/shouravx/WindowsScripts
   Version     : 1.2.0
   Category    : Registry / System Administration
   Compatibility: Windows 10 (PowerShell 5.0+) through Windows 11
-  Execute via : iex (irm 'https://raw.githubusercontent.com/rhshourav/WindowsScripts/main/Registry/WARDEN.ps1')
+  Execute via : iex (irm 'https://raw.githubusercontent.com/shouravx/WindowsScripts/main/Registry/WARDEN.ps1')
 ================================================================================
   FEATURES:
     - Full system registry backup (HKLM, HKCU, HKU, including SAM/SECURITY/SYSTEM)
@@ -35,8 +35,8 @@ $ErrorActionPreference = 'Continue'
 #  SCRIPT METADATA
 #============================================================
 $Script:W_VERSION  = '1.0.0'
-$Script:W_AUTHOR   = 'rhshourav'
-$Script:W_REPO     = 'https://github.com/rhshourav/WindowsScripts'
+$Script:W_AUTHOR   = 'shouravx'
+$Script:W_REPO     = 'https://github.com/shouravx/WindowsScripts'
 $Script:W_BUILD    = '20250101'
 #endregion
 
@@ -119,7 +119,7 @@ try {
         text  = "WARDEN v1.2.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 #region ============================================================

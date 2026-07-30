@@ -1,7 +1,7 @@
-# Developer Note — Auto App Installer (CLI-only) Framework
+﻿# Developer Note — Auto App Installer (CLI-only) Framework
 **Project:** Windows-Scripts / Auto App Installer  
 **Script:** Auto App Installer – CLI Only (v2.2.0+)  
-**Author:** rhshourav
+**Author:** shouravx
 
 This note documents the **rule system**, **custom arguments**, and the **pre/post install hook mechanism** (local + optional remote). It is written for maintainers who will extend or troubleshoot the installer framework.
 
@@ -265,7 +265,7 @@ Get-ChildItem -File | Where-Object Extension -in '.exe','.msi' | Select-Object N
 Search meta log:
 
 ```powershell
-Select-String -Path $env:TEMP\rhshourav\WindowsScripts\AutoAppInstaller\*.meta.log -Pattern 'PreInstall|PostInstall|NoLocalPreFound|NoLocalPostFound|RemoteBlocked'
+Select-String -Path $env:TEMP\shouravx\WindowsScripts\AutoAppInstaller\*.meta.log -Pattern 'PreInstall|PostInstall|NoLocalPreFound|NoLocalPostFound|RemoteBlocked'
 ```
 
 ---
@@ -326,8 +326,8 @@ Example structure:
   AppliesTo = 'Exe'
   MatchType = 'Contains'
   Match     = 'illustrator'
-  PreUrl    = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/<COMMIT_SHA>/Hooks/illustrator.pre.ps1'
-  PostUrl   = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/<COMMIT_SHA>/Hooks/illustrator.post.ps1'
+  PreUrl    = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/<COMMIT_SHA>/Hooks/illustrator.pre.ps1'
+  PostUrl   = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/<COMMIT_SHA>/Hooks/illustrator.post.ps1'
 }
 ```
 

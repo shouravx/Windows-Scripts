@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     DriverDex — Automatic Hardware Driver Detector & Installer  v2.3.1
@@ -17,7 +17,7 @@
                  network call, so `irm <url> | iex` works the same on old and new builds.
     Requires   : PowerShell 5.1+
     Elevation  : Recommended (auto-elevates on request)
-    Author     : DriverDex — https://github.com/rhshourav/driverdex
+    Author     : DriverDex — https://github.com/shouravx/driverdex
 #>
 
 # Capture the caller's original preferences so that when this script is run
@@ -119,7 +119,7 @@ function Repair-DDxModuleEncoding {
 # ═══════════════════════════════════════════════════════════════════════════════
 
 $Script:VERSION = '2.3.1'
-$Script:GITHUB_RAW = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/DriverDex'
+$Script:GITHUB_RAW = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/DriverDex'
 $Script:ModulePath = $PSScriptRoot
 
 if (-not $Script:ModulePath -or -not (Test-Path "$Script:ModulePath\Modules")) {
@@ -587,7 +587,7 @@ function Invoke-ContributePrompt {
     Write-Host "    ✘  Serial numbers, MAC addresses, or unique device identifiers" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "  Submissions are reviewed by maintainers before entering the database." -ForegroundColor DarkGray
-    Write-Host "  https://github.com/rhshourav/driverdex/blob/main/PRIVACY.md" -ForegroundColor Cyan
+    Write-Host "  https://github.com/shouravx/driverdex/blob/main/PRIVACY.md" -ForegroundColor Cyan
     Write-Host ""
 
     if (@($UnmatchedLocalDrivers).Count -eq 0) {
@@ -610,7 +610,7 @@ function Invoke-ContributePrompt {
 
     if ($contrib -notmatch '^[Yy]') {
         Write-Info "No problem — you can always contribute later by re-running this script."
-        Write-Info "Or visit: https://github.com/rhshourav/driverdex"
+        Write-Info "Or visit: https://github.com/shouravx/driverdex"
         Write-Host ""
         return
     }
@@ -639,21 +639,21 @@ function Invoke-ContributePrompt {
         Write-Step "Launching DriverDex Contribution Tool (TUI)..."
         try {
             Invoke-Expression (Invoke-RestMethod `
-                'https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/contribute/run.ps1')
+                'https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/contribute/run.ps1')
         } catch {
             Write-Err -What "Could not launch the TUI contribution tool." `
                       -Reason $_.Exception.Message `
-                      -Fix    "Run manually: irm https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/contribute/run.ps1 | iex"
+                      -Fix    "Run manually: irm https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/contribute/run.ps1 | iex"
         }
     } else {
         Write-Step "Launching DriverDex Contribution Tool (Background)..."
         try {
             Invoke-Expression (Invoke-RestMethod `
-                'https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/contribute/bg/run_bg.ps1')
+                'https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/contribute/bg/run_bg.ps1')
         } catch {
             Write-Err -What "Could not launch the background contribution tool." `
                       -Reason $_.Exception.Message `
-                      -Fix    "Run manually: irm https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/contribute/bg/run_bg.ps1 | iex"
+                      -Fix    "Run manually: irm https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/contribute/bg/run_bg.ps1 | iex"
         }
     }
 
@@ -1426,7 +1426,7 @@ if ($needsReboot) {
     Write-Host ""
 }
 
-Write-Host "  DriverDex Offline Bundle — https://github.com/rhshourav/driverdex" -ForegroundColor DarkCyan
+Write-Host "  DriverDex Offline Bundle — https://github.com/shouravx/driverdex" -ForegroundColor DarkCyan
 Write-Host ""
 '@
 
@@ -1499,7 +1499,7 @@ function Main {
             Write-Host ""
             Invoke-SearchEngine -IsAdmin (Test-Administrator) -ScratchDir $Script:scratch
             Write-Host ""
-            Write-Host "  DriverDex — https://github.com/rhshourav/driverdex" -ForegroundColor DarkCyan
+            Write-Host "  DriverDex — https://github.com/shouravx/driverdex" -ForegroundColor DarkCyan
             Write-Info "  Session log: $(Get-LogPath)"
             Write-Host ""
             Write-Log -Level INFO -Msg "Search Engine session complete."
@@ -1513,7 +1513,7 @@ function Main {
             if (-not $isAdmin) { Request-Elevation }
             $isAdmin = Test-Administrator
             Invoke-ForceWindowsUpdate -IsAdmin $isAdmin
-            Write-Host "  DriverDex — https://github.com/rhshourav/driverdex" -ForegroundColor DarkCyan
+            Write-Host "  DriverDex — https://github.com/shouravx/driverdex" -ForegroundColor DarkCyan
             Write-Info "  Session log: $(Get-LogPath)"
             Write-Host ""
             Write-Log -Level INFO -Msg "Force Windows Update session complete."
@@ -1525,7 +1525,7 @@ function Main {
         if ($mode -eq 'packager') {
             Invoke-OfflinePackager
             Write-Host ""
-            Write-Host "  DriverDex — https://github.com/rhshourav/driverdex" -ForegroundColor DarkCyan
+            Write-Host "  DriverDex — https://github.com/shouravx/driverdex" -ForegroundColor DarkCyan
             Write-Info "  Session log: $(Get-LogPath)"
             Write-Host ""
             Write-Log -Level INFO -Msg "Offline Packager session complete."
@@ -1667,7 +1667,7 @@ function Main {
         # Step 10: Reboot prompt
         Invoke-RebootPrompt -Results @($results)
 
-        Write-Host "  DriverDex — https://github.com/rhshourav/driverdex" -ForegroundColor DarkCyan
+        Write-Host "  DriverDex — https://github.com/shouravx/driverdex" -ForegroundColor DarkCyan
         Write-Info "  Session log: $(Get-LogPath)"
         Write-Host ""
         Write-Log -Level INFO -Msg "Session complete."

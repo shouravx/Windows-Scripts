@@ -1,8 +1,8 @@
-
+﻿
 # LTSC Add Microsoft Store Installer
 
-**Author:** rhshourav  
-**GitHub:** [https://github.com/rhshourav](https://github.com/rhshourav)  
+**Author:** shouravx  
+**GitHub:** [https://github.com/shouravx](https://github.com/shouravx)  
 **Supporting Repo:** [https://github.com/lixuy/LTSC-Add-MicrosoftStore](https://github.com/lixuy/LTSC-Add-MicrosoftStore)
 
 ---
@@ -38,7 +38,7 @@ The script also displays author and repository information at the start of execu
 ## Usage
 ### Try
 ```
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/LTSC-ADD-MS_Store-2019/DL-RUN.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/LTSC-ADD-MS_Store-2019/DL-RUN.ps1 | iex
 ```
 ### OR
 1. Download `Install-Store.ps1`.
@@ -68,6 +68,6 @@ This project is for **educational purposes**. You may use and modify it for pers
 
 ---
 
-**Author:** rhshourav  
-**GitHub:** [https://github.com/rhshourav](https://github.com/rhshourav)  
+**Author:** shouravx  
+**GitHub:** [https://github.com/shouravx](https://github.com/shouravx)  
 **Supporting Repo:** [https://github.com/lixuy/LTSC-Add-MicrosoftStore](https://github.com/lixuy/LTSC-Add-MicrosoftStore)

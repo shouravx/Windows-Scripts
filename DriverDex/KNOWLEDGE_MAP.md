@@ -1,4 +1,4 @@
-# DriverDex — Knowledge Map for Next AI
+﻿# DriverDex — Knowledge Map for Next AI
 
 ## Project Overview
 
@@ -7,7 +7,7 @@
 - **Version:** 2.4.0
 - **Compatibility:** Windows 7 SP1, 8.1, 10, 11 (x86 and x64)
 - **Requires:** PowerShell 5.1+ (both Windows PowerShell and PowerShell Core)
-- **Author:** https://github.com/rhshourav/driverdex
+- **Author:** https://github.com/shouravx/driverdex
 
 ---
 
@@ -232,8 +232,8 @@ For PCs without internet access. Two-step workflow:
 |---|---|---|
 | HWID Lookup | `https://driverdex-check.driverdex.workers.dev/api/hwid` | GET, queries by hardware IDs |
 | Text Search | `https://driverdex-check.driverdex.workers.dev/api/search` | GET, queries by search term |
-| LFS Batch | `https://github.com/rhshourav/driverdex.git/info/lfs/objects/batch` | Git LFS pointer resolution |
-| Extractor | `https://raw.githubusercontent.com/rhshourav/DriverDex/refs/heads/main/extractor/extractor.exe` | Downloaded on first run |
+| LFS Batch | `https://github.com/shouravx/driverdex.git/info/lfs/objects/batch` | Git LFS pointer resolution |
+| Extractor | `https://raw.githubusercontent.com/shouravx/DriverDex/refs/heads/main/extractor/extractor.exe` | Downloaded on first run |
 
 ---
 

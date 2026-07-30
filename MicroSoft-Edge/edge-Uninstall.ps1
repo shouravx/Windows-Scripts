@@ -1,8 +1,8 @@
-<#
+﻿<#
   Windows-Scripts | Remove Microsoft Edge (Best-Effort) - Interactive Remover
   Supports: Windows 10 19H1 (1903) -> Windows 11 current | PowerShell 5.1+
   Author : Shourav
-  GitHub : https://github.com/rhshourav
+  GitHub : https://github.com/shouravx
   Version: 1.3.1
 
   NOTES:
@@ -20,7 +20,7 @@ $ErrorActionPreference = "Stop"
 $ScriptName    = "Remove Edge - Interactive Remover"
 $ScriptVersion = "1.3.1"
 $ScriptAuthor  = "Shourav"
-$ScriptGitHub  = "github.com/rhshourav"
+$ScriptGitHub  = "github.com/shouravx"
 $ScriptPack    = "Windows-Scripts"
 
 # Banner mode:
@@ -54,7 +54,7 @@ try {
         text  = "MS EDGE Uninstaller v$($ScriptVersion)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 function Set-ConsoleTheme {
     try {

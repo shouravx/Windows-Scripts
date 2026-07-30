@@ -1,7 +1,7 @@
-#define AppName "Windows-Scripts - Remove Edge"
+﻿#define AppName "Windows-Scripts - Remove Edge"
 #define AppVersion "1.3.1"
 #define AppPublisher "Shourav"
-#define AppURL "https://github.com/rhshourav"
+#define AppURL "https://github.com/shouravx"
 #define AppExeName "Remove Edge (Windows-Scripts).lnk"
 #define ScriptName "Remove-Edge-Menu.ps1"
 

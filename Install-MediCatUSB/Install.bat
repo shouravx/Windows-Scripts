@@ -1,4 +1,4 @@
-@echo OFF & setlocal enabledelayedexpansion
+﻿@echo OFF & setlocal enabledelayedexpansion
 title Medicat Installer [STARTING]
 cd /d %~dp0
 Set "Path=%Path%;%CD%;%CD%\bin;"
@@ -169,8 +169,8 @@ pause > nul
 cls
 mode con:cols=100 lines=58
 echo.====================================================================================================
-echo.                            Part of Windows Scripts by rhshourav
-echo.          https://github.com/rhshourav/Windows-Scripts/tree/main/Install-MediCatUSB
+echo.                            Part of Windows Scripts by shouravx
+echo.          https://github.com/shouravx/Windows-Scripts/tree/main/Install-MediCatUSB
 echo.====================================================================================================
 echo.@@   @@  @@@@@@  @@       @@@@    @@@@   @@   @@  @@@@@@          @@@@@@   @@@@                  
 echo.@@   @@  @@      @@      @@  @@  @@  @@  @@@ @@@  @@              @@    @@  @@                

@@ -1,4 +1,4 @@
-# DupReaper (Drip Script)
+﻿# DupReaper (Drip Script)
 
 A lightweight PowerShell utility for managing and cleaning duplicate files on Windows systems.
 
@@ -9,7 +9,7 @@ A lightweight PowerShell utility for managing and cleaning duplicate files on Wi
 Run directly from PowerShell:
 
 ```powershell
-iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/DupReaper/drip.ps1)
+iex (irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/DupReaper/drip.ps1)
 ```
 
 ---
@@ -99,6 +99,6 @@ MIT License (or specify your license here)
 
 ## 👤 Author
 
-**rhshourav**
+**shouravx**
 
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)

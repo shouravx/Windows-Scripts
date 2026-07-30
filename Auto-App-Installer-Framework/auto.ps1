@@ -1,9 +1,9 @@
-# =========================================
+﻿# =========================================
 # Winget App Installer - ASCII Safe (PS5.1 + PS7 Hardened)
 # =========================================
 # Version : v1.4.0
-# Author  : rhshourav
-# GitHub  : https://github.com/rhshourav
+# Author  : shouravx
+# GitHub  : https://github.com/shouravx
 # Category: Windows Scripts
 # =========================================
 
@@ -48,7 +48,7 @@ try {
         text  = "Winget App Installer v1.4.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 # -----------------------------
 # UI Helpers (ASCII-safe)
@@ -62,8 +62,8 @@ function Show-Banner {
     Write-Host "============================================================" -ForegroundColor DarkCyan
     Write-Host "| Winget App Installer (Hardened)                        |" -ForegroundColor Cyan
     Write-Host "| Version : v1.4.0                                       |" -ForegroundColor Gray
-    Write-Host "| Author  : rhshourav                                    |" -ForegroundColor Gray
-    Write-Host "| GitHub  : https://github.com/rhshourav                 |" -ForegroundColor Gray
+    Write-Host "| Author  : shouravx                                    |" -ForegroundColor Gray
+    Write-Host "| GitHub  : https://github.com/shouravx                 |" -ForegroundColor Gray
     Write-Host "============================================================" -ForegroundColor DarkCyan
     Write-Host ""
 }
@@ -175,7 +175,7 @@ function Resolve-WingetPath {
 # -----------------------------
 # Transcript Logging
 # -----------------------------
-$global:WorkRoot = Join-Path $env:ProgramData "rhshourav\WindowsScripts\WingetInstaller"
+$global:WorkRoot = Join-Path $env:ProgramData "shouravx\WindowsScripts\WingetInstaller"
 $global:LogRoot  = Join-Path $global:WorkRoot "Logs"
 Ensure-Dir $global:WorkRoot
 Ensure-Dir $global:LogRoot
@@ -346,7 +346,7 @@ function Download-File {
                         # WebClient
                         $used = "WebClient"
                         $wc = New-Object System.Net.WebClient
-                        $wc.Headers.Add("User-Agent","rhshourav-WindowsScripts")
+                        $wc.Headers.Add("User-Agent","shouravx-WindowsScripts")
                         $wc.DownloadFile($Url, $Destination)
                     }
                 }

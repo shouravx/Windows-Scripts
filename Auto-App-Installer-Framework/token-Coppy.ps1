@@ -1,4 +1,4 @@
-<#
+﻿<#
   Copy-TokenToClipboard.ps1 (Windows PowerShell 5.1+ / Windows 10 → Windows 11)
 
   Reads a text file in the SAME directory as this script, copies its content to
@@ -54,7 +54,7 @@ try {
         text  = "Tocken Copy V2.0.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 function Show-Popup {
   param([string]$Text, [string]$Caption, [int]$TimeoutSec)

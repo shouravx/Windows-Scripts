@@ -1,4 +1,4 @@
-# -----------------------------
+﻿# -----------------------------
 # UI: Black background + Custom Branding
 # -----------------------------
 try {
@@ -24,22 +24,22 @@ try {
         text  = "Install MediCat v1.2.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # --- Branding & Telemetry ---
 if (-not $args) {
     Write-Host ''
     Write-Host 'Check My Github: ' -NoNewline
-    Write-Host 'https://github.com/rhshourav' -ForegroundColor Green
-    Write-Host 'Part of Windows Scripts by rhshourav' -ForegroundColor Cyan
+    Write-Host 'https://github.com/shouravx' -ForegroundColor Green
+    Write-Host 'Part of Windows Scripts by shouravx' -ForegroundColor Cyan
     Write-Host ''
 }
 
 & {
     $ErrorActionPreference = 'Stop'
     $psv = (Get-Host).Version.Major
-    $URL = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Install-MediCatUSB/Install.bat'
+    $URL = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Install-MediCatUSB/Install.bat'
 
     # --- Pre-Flight Checks ---
     if ($ExecutionContext.SessionState.LanguageMode.value__ -ne 0) {

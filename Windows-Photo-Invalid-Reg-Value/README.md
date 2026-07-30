@@ -1,8 +1,8 @@
-# Windows Photos “Invalid Value for Registry” Fix (Auto Default Apps)
+﻿# Windows Photos “Invalid Value for Registry” Fix (Auto Default Apps)
 
 **Part of:** Windows-Scripts  
-**Author:** rhshourav  
-**Repo:** rhshourav/Windows-Scripts   
+**Author:** shouravx  
+**Repo:** shouravx/Windows-Scripts   
 
 This PowerShell script fixes the common Windows Photos error **“Invalid Value for Registry”** and (optionally) re-applies **default app file associations** using a curated XML from this repository. It is designed to run cleanly in automation and supports **auto-elevation**, including when executed via `iex (irm ...)`. 
 
@@ -48,7 +48,7 @@ This PowerShell script fixes the common Windows Photos error **“Invalid Value 
 ### Run via IEX (recommended for your automation style)
 
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1")
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1")
 ````
 
 ### Run locally
@@ -74,21 +74,21 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\winPhotoInvalidRegFix.ps1
 Force a specific association XML:
 
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1") `
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1") `
   -ForceConfig "Win11_ImageGlass+VLC+NanaZip+Acrobat.xml"
 ```
 
 Only repair Photos (do not touch default apps policy / associations):
 
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1") `
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1") `
   -SkipDefaultApps
 ```
 
 Only apply default app associations (do not repair Photos):
 
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1") `
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Photo-Invalid-Reg-Value/winPhotoInvalidRegFix.ps1") `
   -SkipPhotosRepair
 ```
 

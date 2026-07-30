@@ -1,4 +1,4 @@
-# =============================================================
+﻿# =============================================================
 # ERP Font Installer (Network → GitHub Fallback)
 # Windows 10/11 Compatible – Verified Installation
 # =============================================================
@@ -16,8 +16,8 @@ try {
 # Script Info
 # -----------------------------
 $ScriptName = "ERP Font Install"
-$Author     = "rhshourav"
-$GitHub     = "https://github.com/rhshourav/Windows-Scripts"
+$Author     = "shouravx"
+$GitHub     = "https://github.com/shouravx/Windows-Scripts"
 $Version    = "v1.1.1"
 
 Write-Host ""
@@ -43,7 +43,7 @@ try {
         text  = "ERP Font Install v$($Version)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 $ErrorActionPreference = "Stop"
 
@@ -155,7 +155,7 @@ $NetworkSources = @(
 )
 
 $GitHubSource = @{
-    Owner  = "rhshourav"
+    Owner  = "shouravx"
     Repo   = "ideal-fishstick"
     Folder = "erp_font"
 }

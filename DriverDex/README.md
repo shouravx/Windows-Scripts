@@ -1,4 +1,4 @@
-# DriverDex
+﻿# DriverDex
 
 **Automatic Hardware Driver Detector & Installer**
 Scans your hardware, checks it against the DriverDex database, and only bothers you about what actually needs attention.
@@ -6,7 +6,7 @@ Scans your hardware, checks it against the DriverDex database, and only bothers 
 ## Quick Start
 
 ```powershell
-irm https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/DriverDex-Installer.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/DriverDex-Installer.ps1 | iex
 ```
 
 Run that in PowerShell (Admin recommended — it'll offer to self-elevate if you don't). That's it.
@@ -50,9 +50,9 @@ powershell -ExecutionPolicy Bypass -File ".\DriverDex-Installer.ps1"
 
 ## Privacy
 
-Contribution is opt-in and anonymized — no account, no PII, no file/browsing data. Full policy: [PRIVACY.md](https://github.com/rhshourav/driverdex/blob/main/PRIVACY.md)
+Contribution is opt-in and anonymized — no account, no PII, no file/browsing data. Full policy: [PRIVACY.md](https://github.com/shouravx/driverdex/blob/main/PRIVACY.md)
 
 ## Links
 
-- Repo: https://github.com/rhshourav/driverdex
+- Repo: https://github.com/shouravx/driverdex
 - Session logs: `%TEMP%\DriverDex-<date>.log`

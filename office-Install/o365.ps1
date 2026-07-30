@@ -1,7 +1,7 @@
-# ============================================================
+﻿# ============================================================
 # O365 Installer (ODT Correct Flow)
-# Author : rhshourav
-# GitHub : rhshourav / rhshoura
+# Author : shouravx
+# GitHub : shouravx / rhshoura
 # Works  : Windows 10 / 11
 # Version : 2.4.0
 # ============================================================
@@ -9,7 +9,7 @@
 $ErrorActionPreference = "Stop"
 
 # -------- CONFIG --------
-$ZipUrl = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/O365.zip"
+$ZipUrl = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/O365.zip"
 $Base   = Join-Path $env:TEMP "O365_Install"
 $Zip    = Join-Path $Base "O365.zip"
 # ------------------------
@@ -40,7 +40,7 @@ try {
         text  = "Office 365 Install v2.4.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # -----------------------------
@@ -59,7 +59,7 @@ Set-Location $Base
 
 Write-Host "===================================================" -ForegroundColor Cyan
 Write-Host " O365 Installer (ODT Download + Configure)" -ForegroundColor Cyan
-Write-Host "           |rhshourav|v2.4.0|                      " -ForegroundColor Cyan
+Write-Host "           |shouravx|v2.4.0|                      " -ForegroundColor Cyan
 Write-Host "===================================================" -ForegroundColor Cyan
 
 # -------- DOWNLOAD ZIP --------

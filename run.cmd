@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 setlocal EnableExtensions EnableDelayedExpansion
 
 :: ==========================================================
@@ -77,7 +77,7 @@ call :TestUrl
 if not "%errorlevel%"=="0" (
   echo %ESC%[91m[!] raw.githubusercontent.com check FAILED.%ESC%[0m
   echo %ESC%[90m    Likely proxy/firewall/DNS restriction.%ESC%[0m
-  echo %ESC%[90m    Contact: rhshourav.gitbub.io/contact%ESC%[0m
+  echo %ESC%[90m    Contact: shouravx.gitbub.io/contact%ESC%[0m
   call :Hold 45
   goto :END
 )
@@ -92,7 +92,7 @@ call :CompatibilityWarning
 :: ===============================
 :: Download + Run
 :: ===============================
-set "DL_URL=https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/windowsScripts.ps1"
+set "DL_URL=https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/windowsScripts.ps1"
 set "DL_OUT=%TEMP%\windowsScripts.ps1"
 
 echo %ESC%[93m[+] Downloading: windowsScripts.ps1%ESC%[0m
@@ -133,8 +133,8 @@ if "%rc%"=="0" (
 )
 echo.
 
-echo %ESC%[97m Author : %ESC%[96mrhshourav%ESC%[0m
-echo %ESC%[97m GitHub  : %ESC%[94mhttps://github.com/rhshourav/Windows-Scripts%ESC%[0m
+echo %ESC%[97m Author : %ESC%[96mshouravx%ESC%[0m
+echo %ESC%[97m GitHub  : %ESC%[94mhttps://github.com/shouravx/Windows-Scripts%ESC%[0m
 echo.
 
 :END
@@ -201,7 +201,7 @@ if not "%errorlevel%"=="0" set "WARN=1"
 if defined WARN (
   echo %ESC%[91m============================================================%ESC%[0m
   echo %ESC%[91m Intended script might not work perfectly on this system.%ESC%[0m
-  echo %ESC%[97m Contact: %ESC%[96mrhshourav.gitbub.io/contact%ESC%[0m
+  echo %ESC%[97m Contact: %ESC%[96mshouravx.gitbub.io/contact%ESC%[0m
   echo %ESC%[91m============================================================%ESC%[0m
   call :Countdown 15
   echo.

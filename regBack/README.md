@@ -1,4 +1,4 @@
-# WARDEN: Windows Advanced Registry Defense, Export & Restoration Nexus
+﻿# WARDEN: Windows Advanced Registry Defense, Export & Restoration Nexus
 
 **WARDEN** is a high-performance PowerShell utility designed to safeguard the Windows Registry through advanced extraction techniques, integrity verification, and fail-safe restoration points. It serves as a comprehensive "defense engine" for system administrators and power users who need more than just a basic `.reg` export.
 
@@ -8,7 +8,7 @@
 To launch WARDEN immediately with administrative privileges, run the following in an **Elevated PowerShell** prompt:
 
 ```powershell
-iex (irm 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/regBack/WARDEN.ps1')
+iex (irm 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/regBack/WARDEN.ps1')
 ```
 *(Note: Ensure your execution policy allows scripts or use `-ExecutionPolicy Bypass` if running the local file).*
 
@@ -51,5 +51,5 @@ Inside this directory, you will find session-specific folders containing:
 ### ⚠️ Disclaimer
 > **WARDEN** handles system-critical components. While it includes robust safety snapshots and rollback features, modifying the Windows Registry always carries inherent risks. Always verify your backups before proceeding with a full system restoration.
 
-**Author:** rhshourav
-**Repository:** [WindowsScripts](https://github.com/rhshourav/WindowsScripts)
+**Author:** shouravx
+**Repository:** [WindowsScripts](https://github.com/shouravx/WindowsScripts)

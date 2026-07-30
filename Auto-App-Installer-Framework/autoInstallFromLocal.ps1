@@ -1,7 +1,7 @@
-#requires -version 5.1
+﻿#requires -version 5.1
 <#
 .SYNOPSIS
-  Auto App Installer – CLI Only – V4.1.1 (by rhshourav)
+  Auto App Installer – CLI Only – V4.1.1 (by shouravx)
 
 .DESCRIPTION
   - Auto-elevates to Admin (PowerShell 5.1 safe, uses -EncodedCommand)
@@ -46,7 +46,7 @@ Additional change (per request):
 param(
     [switch]$ConfirmEach = $false,
     [string]$LocalFallbackDir = "$PSScriptRoot\Installers",
-    [string]$FrameworkUrl = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1',
+    [string]$FrameworkUrl = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1',
 
     # MSI default mode (global)
     [ValidateSet('Silent','Basic','UI')]
@@ -194,7 +194,7 @@ function Log-Line {
 }
 
 function New-Log {
-    $root = Join-Path $env:TEMP 'rhshourav\WindowsScripts\AutoAppInstaller'
+    $root = Join-Path $env:TEMP 'shouravx\WindowsScripts\AutoAppInstaller'
     New-Item -Path $root -ItemType Directory -Force | Out-Null
 
     $stamp = Get-Date -Format 'yyyyMMdd_HHmmss'
@@ -276,7 +276,7 @@ try {
         text  = "Windows Scripts v4.1.1`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 
@@ -401,7 +401,7 @@ function Resolve-InstallBasePath {
 
     if ($dl -match '^[Yy]$') {
         try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch { }
-        $dst = Join-Path $env:TEMP ('rhshourav_framework_{0}.ps1' -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
+        $dst = Join-Path $env:TEMP ('shouravx_framework_{0}.ps1' -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
         try {
             Invoke-WebRequest -UseBasicParsing -Uri $FrameworkUrl -OutFile $dst
             Write-Good ('Downloaded to: {0}' -f $dst)
@@ -543,7 +543,7 @@ function Download-HookScript {
     $ext = [System.IO.Path]::GetExtension($nameFromUrl)
     if ([string]::IsNullOrWhiteSpace($ext)) { $nameFromUrl += '.ps1' }
 
-    $root = Join-Path $env:TEMP 'rhshourav\WindowsScripts\Hooks'
+    $root = Join-Path $env:TEMP 'shouravx\WindowsScripts\Hooks'
     New-Item -Path $root -ItemType Directory -Force | Out-Null
 
     $dst = Join-Path $root ("{0}_{1}_{2}" -f (Get-Date -Format 'yyyyMMdd_HHmmss'), $Stage.ToLowerInvariant(), $nameFromUrl)
@@ -1153,7 +1153,7 @@ function Stage-FileToTemp {
         [Parameter(Mandatory)][string]$StageTag
     )
 
-    $root = Join-Path $env:TEMP "rhshourav\WindowsScripts\Staging\$StageTag"
+    $root = Join-Path $env:TEMP "shouravx\WindowsScripts\Staging\$StageTag"
     New-Item -Path $root -ItemType Directory -Force | Out-Null
 
     $stamp = Get-Date -Format 'yyyyMMdd_HHmmss'
@@ -1195,7 +1195,7 @@ function Stage-FileToTemp {
 
 function New-MsiLogPath {
     param([Parameter(Mandatory)][System.IO.FileInfo]$App)
-    $root = Join-Path $env:TEMP 'rhshourav\WindowsScripts\MsiLogs'
+    $root = Join-Path $env:TEMP 'shouravx\WindowsScripts\MsiLogs'
     New-Item -Path $root -ItemType Directory -Force | Out-Null
 
     $stamp = Get-Date -Format 'yyyyMMdd_HHmmss'
@@ -1498,15 +1498,15 @@ function Install-Apps {
     Write-Host ''
     Write-Host ('All done. Transcript: {0}' -f $global:LogFile) -ForegroundColor Cyan
     Write-Host ('Meta log   : {0}' -f $global:MetaLog) -ForegroundColor Cyan
-    Write-Host ('MSI logs   : {0}' -f (Join-Path $env:TEMP 'rhshourav\WindowsScripts\MsiLogs')) -ForegroundColor Cyan
-    Write-Host ('Staging dir: {0}' -f (Join-Path $env:TEMP 'rhshourav\WindowsScripts\Staging')) -ForegroundColor Cyan
+    Write-Host ('MSI logs   : {0}' -f (Join-Path $env:TEMP 'shouravx\WindowsScripts\MsiLogs')) -ForegroundColor Cyan
+    Write-Host ('Staging dir: {0}' -f (Join-Path $env:TEMP 'shouravx\WindowsScripts\Staging')) -ForegroundColor Cyan
 }
 
 # ---------------------------
 # Main
 # ---------------------------
 Ensure-Admin
-Write-Header 'Auto App Installer V4.1.1 (CLI only) (by rhshourav)'
+Write-Header 'Auto App Installer V4.1.1 (CLI only) (by shouravx)'
 New-Log
 
 try {

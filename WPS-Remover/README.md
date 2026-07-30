@@ -1,11 +1,11 @@
-# WPS Office Enterprise Removal Utility
+﻿# WPS Office Enterprise Removal Utility
 
 A single-file, zero-dependency PowerShell 5.1 script that completely and safely removes every
 version of WPS Office (Kingsoft Office) from Windows 10 / Windows 11 — designed to run directly
 from the web with no local file needed.
 
-**Author:** rhshourav
-**Repository:** https://github.com/rhshourav/Windows-Scripts/
+**Author:** shouravx
+**Repository:** https://github.com/shouravx/Windows-Scripts/
 
 ---
 
@@ -13,7 +13,7 @@ from the web with no local file needed.
 
 ```powershell
 # Interactive (asks for confirmation, shows console UI)
-iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/WPS-Remover/remove-wps.ps1)
+iex (irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/WPS-Remover/remove-wps.ps1)
 
 # Preview only — makes no changes
 & { iex (irm https://.../remove-wps.ps1) } -DryRun -Verbose

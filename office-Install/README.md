@@ -1,4 +1,4 @@
-# 📦 Office Install Scripts (ODT-based)
+﻿# 📦 Office Install Scripts (ODT-based)
 
 Automated installers for Microsoft Office (O365 / LTSC) using the **Office Deployment Tool (ODT)**.
 
@@ -66,13 +66,13 @@ This script:
 To run the **O365 installer** directly from GitHub (replace the URL with the raw script URL):
 
 ```powershell
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/office-Install/install-o365.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/office-Install/install-o365.ps1 | iex
 ```
 
 Or for the **LTSC-2021 installer**:
 
 ```powershell
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/office-Install/install-ltsc2021.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/office-Install/install-ltsc2021.ps1 | iex
 ```
 
 **Explanation:**

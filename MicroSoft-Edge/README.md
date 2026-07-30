@@ -1,7 +1,7 @@
-# MicroSoft-Edge (Windows-Scripts)
+﻿# MicroSoft-Edge (Windows-Scripts)
 
 **Author:** Shourav  
-**GitHub:** rhshourav/Windows-Scripts  
+**GitHub:** shouravx/Windows-Scripts  
 **Module:** `MicroSoft-Edge`  
 **Purpose:** Non-interactive Microsoft Edge **install** and **uninstall** scripts for Windows 10 (19H1/1903) through Windows 11.
 
@@ -16,7 +16,7 @@
 
 Script:
 - `edge-Uninstall.ps1`  
-  `https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/edge-Uninstall.ps1`
+  `https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/edge-Uninstall.ps1`
 
 ### 2) Edge Install (silent, no GUI)
 - Downloads Microsoft Edge (Enterprise MSI) and installs silently (`msiexec /qn`).
@@ -25,7 +25,7 @@ Script:
 
 Script:
 - `installEdge.ps1`  
-  `https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1`
+  `https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1`
 
 ---
 
@@ -44,7 +44,7 @@ Script:
 Run in PowerShell:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1' | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1' | iex"
 ````
 
 ### Uninstall Edge (best-effort)
@@ -52,7 +52,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubu
 Run in PowerShell:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/edge-Uninstall.ps1' | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/edge-Uninstall.ps1' | iex"
 ```
 
 ---
@@ -64,13 +64,13 @@ If you’re going to use `irm | iex`, you should at least inspect the script fir
 ### View in console
 
 ```powershell
-irm 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1'
+irm 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1'
 ```
 
 ### Save locally then run
 
 ```powershell
-$u='https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1'
+$u='https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1'
 $fp="$env:TEMP\installEdge.ps1"
 irm $u -OutFile $fp
 powershell -NoProfile -ExecutionPolicy Bypass -File $fp

@@ -1,10 +1,10 @@
-<#
+﻿<#
 .SYNOPSIS
   RICOH Printer Suite - Combined Auto-Installer (B&W + Color)
 
 .AUTHOR
-  Shourav (rhshourav)
-  GitHub: https://github.com/rhshourav/Windows-Scripts
+  Shourav (shouravx)
+  GitHub: https://github.com/shouravx/Windows-Scripts
 
 .VERSION
   2.2.0
@@ -36,7 +36,7 @@
 
 .USAGE
   Run as Administrator:
-    iex (irm 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/RICOH-Printer-Suite.ps1')
+    iex (irm 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/RICOH-Printer-Suite.ps1')
   Or locally:
     .\RICOH-Printer-Suite.ps1
   Unattended (skip menu):
@@ -45,13 +45,13 @@
 
 [CmdletBinding()]
 param(
-  [string]$BwZipUrl         = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/RPrint_driver/r_print_driver.zip",
+  [string]$BwZipUrl         = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/RPrint_driver/r_print_driver.zip",
   [string]$BwLocalDir       = "C:\Drivers\RPrint_driver",
   [string]$BwPrinterName    = "RICHO",
   [string]$BwDriverName     = "RICOH MP 2555 PCL 6",
   [string]$BwPortName       = "IP_192.168.18.245",
 
-  [string]$ColorZipUrl      = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/RPrint_driver/SCP2000_PCL.zip",
+  [string]$ColorZipUrl      = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/RPrint_driver/SCP2000_PCL.zip",
   [string]$ColorLocalDir    = "C:\Drivers\SCP2000_PCL",
   [string]$ColorPrinterName = "Secure-Color-Printer",
   [string]$ColorDriverName  = "RICOH IM C2000 PCL 6",
@@ -95,7 +95,7 @@ try {
         text  = "RICHO All In One V2.2.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # ================================================================
@@ -128,10 +128,10 @@ function Show-Logo {
   Write-Host (PL "  Network Printer Auto-Installer Suite  v2.2.0") -NoNewline -ForegroundColor $W
   Write-Host "|" -ForegroundColor $L
   Write-Host "|" -NoNewline -ForegroundColor $L
-  Write-Host (PL "  Author : Shourav (rhshourav)") -NoNewline -ForegroundColor $G
+  Write-Host (PL "  Author : Shourav (shouravx)") -NoNewline -ForegroundColor $G
   Write-Host "|" -ForegroundColor $L
   Write-Host "|" -NoNewline -ForegroundColor $L
-  Write-Host (PL "  GitHub : https://github.com/rhshourav/Windows-Scripts") -NoNewline -ForegroundColor $G
+  Write-Host (PL "  GitHub : https://github.com/shouravx/Windows-Scripts") -NoNewline -ForegroundColor $G
   Write-Host "|" -ForegroundColor $L
   Write-Host $mid -ForegroundColor $L
   Write-Host $bar -ForegroundColor $L

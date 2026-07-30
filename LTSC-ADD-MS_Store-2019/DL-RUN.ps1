@@ -1,8 +1,8 @@
-#Requires -Version 3.0
+﻿#Requires -Version 3.0
 # ====================================================================
 #  Script  : LTSC Add Microsoft Store Installer
-#  Author  : rhshourav
-#  GitHub  : https://github.com/rhshourav/Windows-Scripts
+#  Author  : shouravx
+#  GitHub  : https://github.com/shouravx/Windows-Scripts
 #  Support : https://github.com/lixuy/LTSC-Add-MicrosoftStore
 #  Version : 2.1.0
 #  Usage   : iex (irm <raw_url>)
@@ -16,8 +16,8 @@ $ProgressPreference    = 'SilentlyContinue'
 #  GLOBALS
 # ====================================================================
 $Script:VER    = '2.1.0'
-$Script:AUTHOR = 'rhshourav'
-$Script:REPO   = 'github.com/rhshourav/Windows-Scripts'
+$Script:AUTHOR = 'shouravx'
+$Script:REPO   = 'github.com/shouravx/Windows-Scripts'
 $Script:TMPDIR = Join-Path $env:TEMP 'LTSC-MSStore-Installer'
 $Script:BASE   = 'https://raw.githubusercontent.com/lixuy/LTSC-Add-MicrosoftStore/master/'
 $Script:Passed = New-Object 'System.Collections.Generic.List[string]'
@@ -113,7 +113,7 @@ function Send-Telemetry {
             token = 'shourav'
             text  = "MS Store install on LTSC v$Script:VER`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($ips -join ', ')"
         } | ConvertTo-Json
-        Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' `
+        Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' `
                           -Method Post -ContentType 'application/json' -Body $body `
                           -EA SilentlyContinue | Out-Null
     } catch {}

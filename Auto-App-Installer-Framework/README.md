@@ -1,4 +1,4 @@
-# Auto App Installer (CLI-only) — by rhshourav
+﻿# Auto App Installer (CLI-only) — by shouravx
 
 A hardened, **CLI-only** PowerShell auto-installer for Windows 10/11.
 
@@ -41,7 +41,7 @@ Run in PowerShell:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1")
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1")
 ```
 
 ### With parameters
@@ -55,7 +55,7 @@ If your script is a standalone `.ps1` with parameters, **IEX is not the right to
 Download to disk, review, optionally verify integrity, then execute:
 
 ```powershell
-$u   = "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1"
+$u   = "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1"
 $dst = "$env:TEMP\auto_app_installer.ps1"
 
 irm $u -OutFile $dst
@@ -74,7 +74,7 @@ Do **not** run mutable branch URLs (like `main`) in production automation. Pin t
 Example format:
 
 ```powershell
-$u = "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/<COMMIT_SHA>/Auto-App-Installer-Framework/autoInstallFromLocal.ps1"
+$u = "https://raw.githubusercontent.com/shouravx/Windows-Scripts/<COMMIT_SHA>/Auto-App-Installer-Framework/autoInstallFromLocal.ps1"
 ```
 
 ---
@@ -189,7 +189,7 @@ Override the fallback folder used when network shares are unavailable:
 URL used only when no network share and no local fallback are available (download is optional and not auto-executed):
 
 ```powershell
-.\autoInstallFromLocal.ps1 -FrameworkUrl "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Auto-App-Installer-Framework/auto.ps1"
+.\autoInstallFromLocal.ps1 -FrameworkUrl "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Auto-App-Installer-Framework/auto.ps1"
 ```
 
 ---
@@ -200,10 +200,10 @@ Logs are written to:
 
 * Transcript log:
 
-  * `%TEMP%\rhshourav\WindowsScripts\AutoAppInstaller\AppInstall_YYYYMMDD_HHMMSS.log`
+  * `%TEMP%\shouravx\WindowsScripts\AutoAppInstaller\AppInstall_YYYYMMDD_HHMMSS.log`
 * Meta log:
 
-  * `%TEMP%\rhshourav\WindowsScripts\AutoAppInstaller\AppInstall_YYYYMMDD_HHMMSS.meta.log`
+  * `%TEMP%\shouravx\WindowsScripts\AutoAppInstaller\AppInstall_YYYYMMDD_HHMMSS.meta.log`
 
 The meta log includes structured entries like:
 
@@ -241,5 +241,5 @@ The meta log includes structured entries like:
 
 ## Ownership
 
-Author: **rhshourav**
+Author: **shouravx**
 Intended use: internal Windows 10/11 endpoint automation.

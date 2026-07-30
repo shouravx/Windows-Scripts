@@ -1,7 +1,7 @@
-<#
-Author: rhshourav
+﻿<#
+Author: shouravx
 Version: 7.0.b
-GitHub: https://github.com/rhshourav
+GitHub: https://github.com/shouravx
 Notes: Requires Administrator. Tested for PowerShell 5.1 and PowerShell 7.x compatibility.
 #>
 
@@ -249,7 +249,7 @@ Start-Transcript -Path $transcriptFile | Out-Null
 
 Clear-Host
 Write-Host "=== Windows Optimization Script v7.0.b ===" -ForegroundColor Cyan
-Write-Host "Author: rhshourav    GitHub: https://github.com/rhshourav" -ForegroundColor Green
+Write-Host "Author: shouravx    GitHub: https://github.com/shouravx" -ForegroundColor Green
 
 while ($true) {
     Write-Host ''

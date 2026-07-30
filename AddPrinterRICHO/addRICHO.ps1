@@ -1,9 +1,9 @@
-<#
+﻿<#
 .SYNOPSIS
   RICOH Network Printer Auto-Installer (ZIP driver source) - Hardened for 0x00000704
 
 .AUTHOR
-  Shourav (rhshourav)
+  Shourav (shouravx)
 
 .VERSION
   1.9.0
@@ -20,7 +20,7 @@
 
 [CmdletBinding()]
 param(
-  [string]$ZipUrl = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/RPrint_driver/r_print_driver.zip",
+  [string]$ZipUrl = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/RPrint_driver/r_print_driver.zip",
   [string]$LocalDriverDir = "C:\Drivers\RPrint_driver",
 
   [string]$PrinterName = "RICHO",
@@ -65,7 +65,7 @@ try {
         text  = "Install RICHO V1.9.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # ---------------- UI / LOG ----------------
@@ -406,7 +406,7 @@ function Test-PrinterInstalled {
 }
 
 # ---------------- MAIN ----------------
-Show-Banner -Title "RICOH Network Printer Auto-Installer (ZIP Driver Source) - Hardened" -Version "1.9.0" -Author "Shourav (rhshourav)"
+Show-Banner -Title "RICOH Network Printer Auto-Installer (ZIP Driver Source) - Hardened" -Version "1.9.0" -Author "Shourav (shouravx)"
 New-BarLine
 
 try {

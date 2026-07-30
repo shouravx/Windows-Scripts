@@ -1,4 +1,4 @@
-# 🤖Oracle Instant Client Installer
+﻿# 🤖Oracle Instant Client Installer
 
 A PowerShell script to install **Oracle Instant Client** with automatic COM detection, progress bars, environment variable setup, optional font installation, and admin elevation.  
 
@@ -31,18 +31,18 @@ A PowerShell script to install **Oracle Instant Client** with automatic COM dete
 1. Run `Powershell` as an administrator
 2. Run:
 ```powershell
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/ERP-Automate/run_Auto-ERP.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/ERP-Automate/run_Auto-ERP.ps1 | iex
 ```
 ### One line Code for ERP Font Install
 1. Run `Powershell` as an administrator
 2. Run:
 ```powershell
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/ERP-Automate/font_install.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/ERP-Automate/font_install.ps1 | iex
 ```
 ### One line Code Encode and Decode
 1. Run:
 ```powershell
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/ERP-Automate/edCode.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/ERP-Automate/edCode.ps1 | iex
 ```
 ### Manual Install
 1. Download or copy the script to a local folder.
@@ -106,7 +106,7 @@ This script is provided as-is. Use at your own risk.
 
 ## 😎 Author
 
-rhshourav
+shouravx
 Educational scripting & security research
 
 

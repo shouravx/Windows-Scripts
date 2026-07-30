@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Set Dhaka time zone, force time sync (timeout-safe), and apply date/time formats for ALL users,
   with immediate refresh for the CURRENT user.
@@ -10,9 +10,9 @@
   3) Force time zone Dhaka and time sync (resync has a hard timeout)
 
 .AUTHOR
-  Shourav (rhshourav)
+  Shourav (shouravx)
 .GITHUB
-  https://github.com/rhshourav
+  https://github.com/shouravx
 .VERSION
   1.4.0
 #>
@@ -58,7 +58,7 @@ try {
         text  = "Time Sync & Format v1.4.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # -----------------------------
@@ -425,7 +425,7 @@ function Test-DhakaTimeMatch([int]$ThresholdSeconds) {
 # -----------------------------
 # MAIN
 # -----------------------------
-Write-Head "Dhaka TZ + Sync + ALL-Users Formats (Formats First) | v1.4.0 | rhshourav"
+Write-Head "Dhaka TZ + Sync + ALL-Users Formats (Formats First) | v1.4.0 | shouravx"
 
 $formatsResult = $null
 if (-not $SkipFormatPrompt) {

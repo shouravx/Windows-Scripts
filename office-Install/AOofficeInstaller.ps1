@@ -1,4 +1,4 @@
-# ============================================================
+﻿# ============================================================
 #
 #   ██████╗ ██╗  ██╗███████╗██╗  ██╗ ██████╗ ██╗   ██╗██████╗
 #   ██╔══██╗██║  ██║██╔════╝██║  ██║██╔═══██╗██║   ██║██╔══██╗
@@ -8,12 +8,12 @@
 #   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝
 #
 #   Office Suite Universal Installer
-#   Author  : rhshourav
-#   GitHub  : https://github.com/rhshourav/Windows-Scripts
+#   Author  : shouravx
+#   GitHub  : https://github.com/shouravx/Windows-Scripts
 #   Version : 3.3.0  |  Windows 10 / 11  |  x64
 #
 #   USAGE (run as Administrator):
-#     iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Install-Office.ps1")
+#     iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Install-Office.ps1")
 #
 # ============================================================
 
@@ -24,8 +24,8 @@ Set-StrictMode -Off
 #  CONSTANTS
 # ================================================================
 $SCRIPT_VER  = "3.3.0"
-$SCRIPT_AUTH = "rhshourav"
-$SCRIPT_REPO = "https://github.com/rhshourav/Windows-Scripts"
+$SCRIPT_AUTH = "shouravx"
+$SCRIPT_REPO = "https://github.com/shouravx/Windows-Scripts"
 $CON_W       = 78   # max line width — NEVER exceed or \r breaks
 
 # ================================================================
@@ -42,7 +42,7 @@ $PACKAGES = @(
         Id        = 1
         Name      = "Microsoft 365 (Office 365)"
         Short     = "M365"
-        ZipUrl    = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/O365.zip"
+        ZipUrl    = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/O365.zip"
         ZipName   = "O365.zip"
         # Generated XML — Channel=Current, O365ProPlusRetail (works on any Windows 10/11)
         ConfigXml = @"
@@ -64,7 +64,7 @@ $PACKAGES = @(
         Id        = 2
         Name      = "Office LTSC 2021"
         Short     = "LTSC2021"
-        ZipUrl    = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/OLTSC-2021.zip"
+        ZipUrl    = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/OLTSC-2021.zip"
         ZipName   = "OLTSC-2021.zip"
         ConfigXml = @"
 <Configuration>
@@ -84,7 +84,7 @@ $PACKAGES = @(
         Id        = 3
         Name      = "Office LTSC 2024"
         Short     = "LTSC2024"
-        ZipUrl    = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/OLTSC-2024.zip"
+        ZipUrl    = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/OLTSC-2024.zip"
         ZipName   = "OLTSC-2024.zip"
         ConfigXml = @"
 <Configuration>
@@ -103,7 +103,7 @@ $PACKAGES = @(
         Id        = 4
         Name      = "Office 2019"
         Short     = "O2019"
-        ZipUrl    = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/O2019.zip"
+        ZipUrl    = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/O2019.zip"
         ZipName   = "O2019.zip"
         ConfigXml = @"
 <Configuration>
@@ -244,7 +244,7 @@ function Send-Telemetry { param($pkg)
             token = 'shourav'
             text  = "Office Installer v$SCRIPT_VER | $($pkg.Short)`nUser:$env:USERNAME PC:$env:COMPUTERNAME IP:$ips"
         } | ConvertTo-Json)
-        Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' `
+        Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' `
             -Method Post -ContentType 'application/json' `
             -Body $body -TimeoutSec 5 -EA SilentlyContinue | Out-Null
     } catch {}

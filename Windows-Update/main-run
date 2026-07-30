@@ -1,13 +1,13 @@
-# ============================================
+﻿# ============================================
 # Windows Update Control - Launcher
-# Author: rhshourav
+# Author: shouravx
 # Supports: Disable or Enable Windows Update
 # ============================================
 
 # URLs to scripts
-$disableUrl = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Update/Disable-WindowsUpdate.ps1'
-$enableUrl  = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Windows-Update/Enable-WindowsUpdate.ps1'
-$MSAurl = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Add_Active/run'
+$disableUrl = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Update/Disable-WindowsUpdate.ps1'
+$enableUrl  = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Windows-Update/Enable-WindowsUpdate.ps1'
+$MSAurl = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Add_Active/run'
 
 $tempDir = "$env:TEMP\WUControl"
 if (-not (Test-Path $tempDir)) { New-Item -Path $tempDir -ItemType Directory | Out-Null }

@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     DriverDex UI Module
@@ -82,7 +82,7 @@ function Write-Header {
 
     $v   = "  Automatic Driver Detector & Installer  v$Version"
     $tag = "  Hardware confidence, one script away."
-    $url = "  https://github.com/rhshourav/driverdex"
+    $url = "  https://github.com/shouravx/driverdex"
     Write-Host "  ║$(_Pad $v)║"   -ForegroundColor White
     Write-Host "  ║$(_Pad $tag)║" -ForegroundColor DarkGray
     Write-Host "  ║$(_Pad $url)║" -ForegroundColor DarkGray

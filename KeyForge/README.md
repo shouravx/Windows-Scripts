@@ -1,4 +1,4 @@
-# KeyForge
+﻿# KeyForge
 
 *Forge. Manage. Eliminate.*
 
@@ -21,7 +21,7 @@ A single-file PowerShell console for inspecting Windows keyboard layouts, langua
 .\KeyForge.ps1
 
 # Directly from GitHub, no local file
-irm https://raw.githubusercontent.com/rhshourav/windows-scripts/main/KeyForge/keyforge.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/windows-scripts/main/KeyForge/keyforge.ps1 | iex
 
 # With options
 powershell -ExecutionPolicy Bypass -File .\KeyForge.ps1 -NoColor -VerboseLog
@@ -57,7 +57,7 @@ Requires Windows PowerShell 5.1+ or PowerShell 7+, on Windows 10 1909+ or Window
 ## Project structure
 
 ```
-rhshourav/windows-scripts/
+shouravx/windows-scripts/
 └── KeyForge.ps1     ← this file (single-file, no dependencies)
 ```
 

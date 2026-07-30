@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     DriverDex Install Module
@@ -46,7 +46,7 @@ function Invoke-Extractor {
                 Remove-Item -LiteralPath $ExtractorPath -Force -ErrorAction SilentlyContinue
                 $extractorUrl = (Get-Command -Name 'Get-ExtractorUrl' -ErrorAction SilentlyContinue)
                 $url = if ($extractorUrl) { & Get-ExtractorUrl } else {
-                    'https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/extractor/extractor.exe'
+                    'https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/extractor/extractor.exe'
                 }
                 Get-DriverFile -Url $url -Dest $ExtractorPath -Label 'extractor.exe'
                 continue

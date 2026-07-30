@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -79,8 +79,8 @@
     Preview every action the utility would take without changing anything.
 
 .NOTES
-    Author     : rhshourav
-    Repository : https://github.com/rhshourav/Windows-Scripts/
+    Author     : shouravx
+    Repository : https://github.com/shouravx/Windows-Scripts/
     Requires   : PowerShell 5.1+, Administrator privileges, Windows 10 / Windows 11
     Design note: This script intentionally uses functions + script-scoped state instead of
     PowerShell classes. PowerShell classes are parsed at compile time, and re-defining a class
@@ -154,8 +154,8 @@ $Script:ExitCode       = 0
 
 $Script:UtilityName    = 'WPS Office Enterprise Removal Utility'
 $Script:UtilityVersion = '1.0.0'
-$Script:Author         = 'rhshourav'
-$Script:RepoUrl        = 'https://github.com/rhshourav/Windows-Scripts/'
+$Script:Author         = 'shouravx'
+$Script:RepoUrl        = 'https://github.com/shouravx/Windows-Scripts/'
 
 # When this file is executed directly ("powershell.exe -File remove-wps.ps1" or ".\remove-wps.ps1")
 # $PSCommandPath is populated and it is safe to call exit() at the end - only that process ends.

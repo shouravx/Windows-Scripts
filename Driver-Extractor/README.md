@@ -1,4 +1,4 @@
-<h1 align="center">Driver Extractor + Driver Installer (Windows Scripts)</h1>
+﻿<h1 align="center">Driver Extractor + Driver Installer (Windows Scripts)</h1>
 
 <p align="center">
   Two hardened PowerShell scripts for driver workflow:
@@ -92,13 +92,13 @@ PowerShell will download and execute remote code. Only do this if you trust the 
 
 ### Driver Extractor
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Driver-Extractor/dExtractor.ps1")
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Driver-Extractor/dExtractor.ps1")
 ````
 
 ### Driver Installer
 
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Driver-Extractor/dInstaller.ps1")
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Driver-Extractor/dInstaller.ps1")
 ```
 
 ---
@@ -144,5 +144,5 @@ iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads
 
 ## Author
 
-**Shourav (rhshourav)**
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+**Shourav (shouravx)**
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)

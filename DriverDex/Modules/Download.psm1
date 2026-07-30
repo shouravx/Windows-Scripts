@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     DriverDex Download Module
@@ -36,7 +36,7 @@ function Resolve-LFSPointer {
     #>
     param(
         [string]$PointerPath,
-        [string]$LfsBatchUrl = 'https://github.com/rhshourav/driverdex.git/info/lfs/objects/batch'
+        [string]$LfsBatchUrl = 'https://github.com/shouravx/driverdex.git/info/lfs/objects/batch'
     )
 
     $oid = ''; $size = ''
@@ -90,7 +90,7 @@ function Get-DriverFile {
         [string]$Label          = '',
         [string]$ExpectedSha256 = '',
         [int]   $MaxRetries     = 3,
-        [string]$LfsBatchUrl    = 'https://github.com/rhshourav/driverdex.git/info/lfs/objects/batch'
+        [string]$LfsBatchUrl    = 'https://github.com/shouravx/driverdex.git/info/lfs/objects/batch'
     )
 
     $delays = @(2, 4, 8)

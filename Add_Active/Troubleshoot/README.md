@@ -1,4 +1,4 @@
-# Troubleshooting Guide – Windows Activation & System Repair
+﻿# Troubleshooting Guide – Windows Activation & System Repair
 
 This directory contains **step-by-step troubleshooting guides** related to Windows activation, system instability, and PowerShell execution issues.  
 Each document focuses on a **specific failure scenario** and provides recovery-oriented solutions.
@@ -84,6 +84,6 @@ Each document is independent but can be used together for **progressive troubles
 
 ---
 
-**Author:** rhshourav  
+**Author:** shouravx  
 **Repository:** Windows-Scripts  
 **Purpose:** Educational & system recovery documentation

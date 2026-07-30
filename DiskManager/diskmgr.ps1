@@ -1,11 +1,11 @@
-#Requires -RunAsAdministrator
+﻿#Requires -RunAsAdministrator
 [Console]::OutputEncoding=[System.Text.Encoding]::UTF8
 chcp 65001 > $null
 
-$Author="rhshourav"
+$Author="shouravx"
 $Version="2.0.1"
 
-$LogDir="$env:USERPROFILE\Documents\rhshourav\windowsScripts\logs"
+$LogDir="$env:USERPROFILE\Documents\shouravx\windowsScripts\logs"
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 $LogFile="$LogDir\diskmgr.log"
 
@@ -30,7 +30,7 @@ try {
         text  = "Disk Manger v$($Version)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 function Banner{
 
@@ -277,7 +277,7 @@ Pause
 
 function CheckUpdate{
 
-$repo="https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/diskmgr.ps1"
+$repo="https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/diskmgr.ps1"
 
 $tmp="$env:TEMP\diskmgr_update.ps1"
 

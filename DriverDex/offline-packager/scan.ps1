@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     DriverDex Offline Scanner - Gathers hardware IDs from an air-gapped machine.
@@ -8,7 +8,7 @@
     with DriverDex to build the offline driver bundle.
 .NOTES
     Compatible: Windows 7 SP1 / 8.1 / 10 / 11
-    Author:     DriverDex - https://github.com/rhshourav/driverdex
+    Author:     DriverDex - https://github.com/shouravx/driverdex
 
     This file previously carried an Authenticode signature block. Any edit
     invalidates that signature, so the stale block was removed rather than

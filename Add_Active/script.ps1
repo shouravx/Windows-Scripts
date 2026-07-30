@@ -1,4 +1,4 @@
-# -----------------------------
+﻿# -----------------------------
 # UI: black background + bright colors
 # -----------------------------
 try {
@@ -25,13 +25,13 @@ try {
         text  = "MS Product Active V.2.3.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 if (-not $args) {
     Write-Host ''
     Write-Host 'Check My Github: ' -NoNewline
-    Write-Host 'https://github.com/rhshourav' -ForegroundColor Green
+    Write-Host 'https://github.com/shouravx' -ForegroundColor Green
     Write-Host ''
     
 }
@@ -41,11 +41,11 @@ if (-not $args) {
     $ErrorActionPreference = 'Stop'
 
     $psv = (Get-Host).Version.Major
-    $troubleshoot = 'https://github.com/rhshourav/Windows-Scripts/blob/main/Add_Active/Troubleshoot'
+    $troubleshoot = 'https://github.com/shouravx/Windows-Scripts/blob/main/Add_Active/Troubleshoot'
 
     if ($ExecutionContext.SessionState.LanguageMode.value__ -ne 0) {
         Write-Host "PowerShell is not running in Full Language Mode."
-        Write-Host "Help - https://github.com/rhshourav/Windows-Scripts/blob/main/Add_Active/Troubleshoot/Powershell_issue.md" `
+        Write-Host "Help - https://github.com/shouravx/Windows-Scripts/blob/main/Add_Active/Troubleshoot/Powershell_issue.md" `
             -ForegroundColor White -BackgroundColor Blue
         return
     }
@@ -55,7 +55,7 @@ if (-not $args) {
         [void][System.Math]::Sqrt(144)
     } catch {
         Write-Host "Powershell failed to load .NET."
-        Write-Host "Help - https://github.com/rhshourav/Windows-Scripts/blob/main/Add_Active/Troubleshoot/In-Place%20Repair%20Upgrade.md" `
+        Write-Host "Help - https://github.com/shouravx/Windows-Scripts/blob/main/Add_Active/Troubleshoot/In-Place%20Repair%20Upgrade.md" `
             -ForegroundColor White -BackgroundColor Blue
         return
     }
@@ -93,7 +93,7 @@ if (-not $args) {
     try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
 
     $URLs = @(
-        'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Add_Active/AllInOne/AIO.cmd'
+        'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Add_Active/AllInOne/AIO.cmd'
     )
 
     Write-Progress -Activity "Downloading..." -Status "Please wait"

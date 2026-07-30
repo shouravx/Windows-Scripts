@@ -1,4 +1,4 @@
-#Requires -Version 3.0
+﻿#Requires -Version 3.0
 <#
 .SYNOPSIS
     FileOps - Interactive File & Folder Delete / Move Utility
@@ -8,14 +8,14 @@
     Supports Wildcard, Extension, Exact, and Regex pattern types.
     Auto-creates destination folder if it does not exist.
 
-    Author  : rhshourav
-    Repo    : https://github.com/rhshourav/Windows-Scripts
+    Author  : shouravx
+    Repo    : https://github.com/shouravx/Windows-Scripts
     Version : 1.1.0
 
 .NOTES
     Compatible with PowerShell 3.0+ on Windows 10 and later.
     Run via:
-        iex (irm 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/FileOps.ps1')
+        iex (irm 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/FileOps.ps1')
 #>
 
 Set-StrictMode -Version Latest
@@ -84,7 +84,7 @@ function Write-Header {
     Write-Col '  |   |_|    |_||_____||_|    \____/ |_|   |____/                         |' -FG $C.Green
     Write-Col '  |                                                                        |' -FG $C.Cyan
     Write-Col '  |   Interactive Delete / Move Utility                   v1.1.0           |' -FG $C.Yellow
-    Write-Col '  |   Author : rhshourav          github.com/rhshourav/Windows-Scripts     |' -FG $C.Gray
+    Write-Col '  |   Author : shouravx          github.com/shouravx/Windows-Scripts     |' -FG $C.Gray
     Write-Col '  |                                                                        |' -FG $C.Cyan
     Write-Col '  |   Flow   : Pattern -> Scan -> Preview -> Action (Delete* / Move)       |' -FG $C.Gray
     Write-Col '  |   * Delete is the default action. Press Enter to accept.               |' -FG $C.Gray

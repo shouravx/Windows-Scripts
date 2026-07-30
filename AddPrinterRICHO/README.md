@@ -1,4 +1,4 @@
-# RICOH Network Printer Auto-Installers (PowerShell)
+﻿# RICOH Network Printer Auto-Installers (PowerShell)
 
 This repository contains **two hardened PowerShell auto-installers** for deploying RICOH network printers on Windows systems **without relying on PrintManagement cmdlets** (`Get-Printer`, `Add-Printer`), which are known to hang or fail on corrupted spooler environments.
 
@@ -108,7 +108,7 @@ For B&W:
 ````
 or 
 ````
-iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/AddPrinterRICHO/addRICHO.ps1)
+iex (irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/AddPrinterRICHO/addRICHO.ps1)
 ````
 For Color:
 ```powershell
@@ -119,7 +119,7 @@ For Color:
 ````
 or 
 ````
-iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/AddPrinterRICHO/addColorRICHO.ps1)
+iex (irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/AddPrinterRICHO/addColorRICHO.ps1)
 ````
 
 Optional cleanup switches:
@@ -151,9 +151,9 @@ Optional cleanup switches:
 
 ## 🧑‍💻 Author
 
-**Shourav (rhshourav)**
+**Shourav (shouravx)**
 Cybersecurity & Systems Engineering
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)
 
 ---
 

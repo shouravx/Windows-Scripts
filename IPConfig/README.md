@@ -1,4 +1,4 @@
-<h1 align="center">IPConfig - IPv4 Configurator (USL / Custom / DHCP) + IPv6 Toggle</h1>
+﻿<h1 align="center">IPConfig - IPv4 Configurator (USL / Custom / DHCP) + IPv6 Toggle</h1>
 
 <p align="center">
   Hardened PowerShell script to view and change IPv4 settings (USL profile or fully custom), switch to DHCP, and enable/disable IPv6 — with safe confirmations.
@@ -57,7 +57,7 @@ USL mode accepts IP input in multiple styles and resolves it safely:
 Open **PowerShell as Administrator**, then run:
 
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/IPConfig/Ipconfig.ps1")
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/IPConfig/Ipconfig.ps1")
 ````
 
 ---
@@ -79,5 +79,5 @@ iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads
 
 ## Author
 
-**Shourav (rhshourav)**
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+**Shourav (shouravx)**
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)

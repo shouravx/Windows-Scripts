@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 :: ==================================
 :: Version: 1.0.1s
 :: ==================================
@@ -33,7 +33,7 @@ echo.
 :: ===============================
 :: Download & Run
 :: ===============================
-set "url=https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/AddPrinterRICHO/addRICHO.ps1"
+set "url=https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/AddPrinterRICHO/addRICHO.ps1"
 set "psfile=%TEMP%\addRICHO.ps1"
 
 echo %ESC%[93m[+] Downloading script...%ESC%[0m
@@ -56,8 +56,8 @@ echo    Printer Setup Completed Successfully
 echo ==========================================%ESC%[0m
 echo.
 
-echo %ESC%[97m Author : %ESC%[96mrhshourav%ESC%[0m
-echo %ESC%[97m GitHub : %ESC%[94mhttps://github.com/rhshourav/Windows-Scripts%ESC%[0m
+echo %ESC%[97m Author : %ESC%[96mshouravx%ESC%[0m
+echo %ESC%[97m GitHub : %ESC%[94mhttps://github.com/shouravx/Windows-Scripts%ESC%[0m
 echo.
 
 echo %ESC%[93mPress any key to close this window...%ESC%[0m

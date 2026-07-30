@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   IPv4 Configurator (USL / Custom / DHCP) + IPv6 toggle (PowerShell 5.1 compatible)
 
@@ -25,9 +25,9 @@
   - During input screens: Back / Exit supported
 
 .AUTHOR
-  Shourav (rhshourav)
+  Shourav (shouravx)
 .GITHUB
-  https://github.com/rhshourav
+  https://github.com/shouravx
 .VERSION
   1.3.3
 #>
@@ -103,7 +103,7 @@ try {
         text  = "IP Config V1.3.3`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 # -----------------------------
 # UI: black background + bright colors
@@ -465,7 +465,7 @@ function Prompt-InputAction([string]$Title) {
 # -----------------------------
 # MAIN
 # -----------------------------
-Write-Head "IPv4 Configurator + IPv6 Toggle | v1.3.3 | rhshourav"
+Write-Head "IPv4 Configurator + IPv6 Toggle | v1.3.3 | shouravx"
 
 # USL profile config
 $USL_DefaultX = 18

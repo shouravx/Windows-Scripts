@@ -270,13 +270,13 @@ Utils -> Formatting -> UI -> Drivers -> Download -> Install -> Cache -> Search
 |---|---|---|---|
 | HWID Lookup | https://driverdex-check.driverdex.workers.dev/api/hwid/{encoded_hwid} | GET | Query drivers by hardware ID |
 | Text Search | https://driverdex-check.driverdex.workers.dev/api/search?q={query}&arch={arch}&category={cat} | GET | Query drivers by keyword |
-| LFS Batch | https://github.com/rhshourav/driverdex.git/info/lfs/objects/batch | POST | Resolve Git LFS pointers to real downloads |
-| Extractor Binary | https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/extractor/extractor.exe | GET | Downloaded on first run (13MB) |
-| Elevation Script | https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/DriverDex/driverrun.ps1 | GET | Downloaded for UAC elevation relaunch |
-| Contribute TUI | https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/contribute/run.ps1 | GET | Interactive contribution walkthrough |
-| Contribute BG | https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/contribute/bg/run_bg.ps1 | GET | Silent background contribution |
-| Module Downloads | https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/DriverDex/Modules/{mod}.psm1 | GET | Downloaded when run via irm/iex |
-| DriverDexBG EXE | https://github.com/rhshourav/driverdex/releases/latest/download/DriverDexBG.exe | GET | Background driver installer, launched by launchers |
+| LFS Batch | https://github.com/shouravx/driverdex.git/info/lfs/objects/batch | POST | Resolve Git LFS pointers to real downloads |
+| Extractor Binary | https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/extractor/extractor.exe | GET | Downloaded on first run (13MB) |
+| Elevation Script | https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/DriverDex/driverrun.ps1 | GET | Downloaded for UAC elevation relaunch |
+| Contribute TUI | https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/contribute/run.ps1 | GET | Interactive contribution walkthrough |
+| Contribute BG | https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/contribute/bg/run_bg.ps1 | GET | Silent background contribution |
+| Module Downloads | https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/DriverDex/Modules/{mod}.psm1 | GET | Downloaded when run via irm/iex |
+| DriverDexBG EXE | https://github.com/shouravx/driverdex/releases/latest/download/DriverDexBG.exe | GET | Background driver installer, launched by launchers |
 
 ### DNS Check Targets
 - github.com
@@ -466,7 +466,7 @@ Invoke-OfflinePackager()
 | Variable | Value |
 |---|---|
 | VERSION | 2.4.0 |
-| GITHUB_RAW | https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/DriverDex |
+| GITHUB_RAW | https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/DriverDex |
 
 ### driverrun.ps1 / Drivers.psm1
 
@@ -475,8 +475,8 @@ Invoke-OfflinePackager()
 | VERSION | 2.2.3 |
 | API_BASE | https://driverdex-check.driverdex.workers.dev/api/hwid |
 | SEARCH_API | https://driverdex-check.driverdex.workers.dev/api/search |
-| LFS_BATCH_URL | https://github.com/rhshourav/driverdex.git/info/lfs/objects/batch |
-| EXTRACTOR_URL | https://raw.githubusercontent.com/rhshourav/driverdex/refs/heads/main/extractor/extractor.exe |
+| LFS_BATCH_URL | https://github.com/shouravx/driverdex.git/info/lfs/objects/batch |
+| EXTRACTOR_URL | https://raw.githubusercontent.com/shouravx/driverdex/refs/heads/main/extractor/extractor.exe |
 | API_HOST | driverdex-check.driverdex.workers.dev |
 | GITHUB_HOST | github.com |
 

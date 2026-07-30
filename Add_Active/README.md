@@ -1,4 +1,4 @@
-# PowerShell & CMD Activation Script Collection  
+﻿# PowerShell & CMD Activation Script Collection  
 *(Educational Study Repository)*
 
 ## ⚠️ Disclaimer
@@ -23,7 +23,7 @@ irm https://tinyurl.com/RUN-MSA | iex
 ```
 or
 ```
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Add_Active/run | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Add_Active/run | iex
 ```
 
 or From Original Source:
@@ -39,7 +39,7 @@ iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win |
 iex ((New-Object Net.WebClient).DownloadString('https://tinyurl.com/RUN-MSA'))
 ```
 ```
-iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Add_Active/run'))
+iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Add_Active/run'))
 ```
 or From Original Source:
 ```
@@ -140,7 +140,7 @@ These scripts isolate individual tasks so learners can study them independently.
 
 ## ✍️ Author
 
-**rhshourav**  
+**shouravx**  
 Educational scripting & security research
 
 ---

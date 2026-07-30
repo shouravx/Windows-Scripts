@@ -1,4 +1,4 @@
-# Windows 10 → Windows 11 Automated Upgrade Script
+﻿# Windows 10 → Windows 11 Automated Upgrade Script
 
 A **fully automated PowerShell script** to perform an **in-place upgrade from Windows 10 to Windows 11**, including support for **unsupported hardware** using Microsoft-documented registry bypass methods.
 
@@ -52,7 +52,7 @@ Win11_Auto.iso
 ### Run directly from GitHub
 
 ```powershell
-iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/TO-Win11-Auto-Upgrade/Win11-AutoUpgrade.ps1)
+iex (irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/TO-Win11-Auto-Upgrade/Win11-AutoUpgrade.ps1)
 ````
 
 ### Run locally
@@ -115,5 +115,5 @@ Use at your own risk.
 
 **Shourav**
 Cyber Security Engineer
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)
 

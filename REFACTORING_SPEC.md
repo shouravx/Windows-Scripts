@@ -1,4 +1,4 @@
-# PowerShell Menu System Refactoring - Complete Specification
+﻿# PowerShell Menu System Refactoring - Complete Specification
 
 ## Overview
 This specification details the refactoring of the Windows Scripts menu system from a flat 26-item menu to a hierarchical structure with expandable submenus while preserving all functionality.
@@ -335,9 +335,9 @@ All 12 criteria must pass:
 #  CONSTANTS & SETUP
 # ================================================================
 $Script:VER = '27.5.0'
-$Script:AUTHOR = 'rhshourav'
-$Script:GITHUB = 'https://github.com/rhshourav/Windows-Scripts'
-$Script:SELF_URL = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/windowsScripts.ps1'
+$Script:AUTHOR = 'shouravx'
+$Script:GITHUB = 'https://github.com/shouravx/Windows-Scripts'
+$Script:SELF_URL = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/windowsScripts.ps1'
 $Script:TrustedIPs = @('192.168.18.201')
 # ... admin check, console setup, telemetry, DriverDex BG
 

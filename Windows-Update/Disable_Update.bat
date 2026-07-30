@@ -1,9 +1,9 @@
-@echo off
+﻿@echo off
 :: ============================================================
 :: Full Windows Update Disable Script
 :: Works on Windows 10/11
 :: Requires Administrator Privileges
-:: Created By rhshourav V.1.0
+:: Created By shouravx V.1.0
 :: ============================================================
 
 :: =======================

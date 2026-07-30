@@ -1,4 +1,4 @@
-# Intel System Interrupt Fix Toolkit
+﻿# Intel System Interrupt Fix Toolkit
 
 This repository contains **two PowerShell utilities** designed specifically to **reduce high “System Interrupts” CPU usage** on Intel-based Windows systems.
 
@@ -134,8 +134,8 @@ These scripts address those root causes directly.
 
 ## 👤 Author
 
-**rhshourav**
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+**shouravx**
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)
 
 ---
 

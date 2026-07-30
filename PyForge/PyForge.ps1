@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     PyForge v1.0.2 - Universal Python to EXE Compiler
@@ -8,7 +8,7 @@
     version-info embedding, and Authenticode code signing
     (self-signed or real PFX certificate).
 .AUTHOR
-    rhshourav
+    shouravx
 .NOTES
     Compatible with: iex (irm <url>)
     Requires:        Python 3.8+ on PATH
@@ -61,7 +61,7 @@ $ErrorActionPreference = 'Stop'
 #  GLOBALS
 # ─────────────────────────────────────────────────────────────
 $PYFORGE_VERSION = '1.0.3'
-$PYFORGE_AUTHOR  = 'rhshourav'
+$PYFORGE_AUTHOR  = 'shouravx'
 $BUILD_TEMP      = Join-Path $env:TEMP "PyForge_$(Get-Random)"
 $ORIGINAL_DIR    = Get-Location
 

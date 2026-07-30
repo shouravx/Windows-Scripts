@@ -1,13 +1,13 @@
-<#
+﻿<#
   Windows Photos "Invalid Value for Registry" Fix + Default App Associations Auto-Apply
   Part of: Windows-Scripts
-  Author : rhshourav
-  GitHub : https://github.com/rhshourav/Windows-Scripts
+  Author : shouravx
+  GitHub : https://github.com/shouravx/Windows-Scripts
   Version: 1.2.1
 
   - Auto-detect OS + installed apps
   - Downloads matching XML (and optional REG) from:
-    https://api.github.com/repos/rhshourav/Windows-Scripts/contents/Windows-Photo-Invalid-Reg-Value/File%20Associations?ref=main
+    https://api.github.com/repos/shouravx/Windows-Scripts/contents/Windows-Photo-Invalid-Reg-Value/File%20Associations?ref=main
   - Applies DefaultAssociationsConfiguration policy + DISM import
   - Clears per-user broken UserChoice keys for common image extensions
   - Resets/repairs Microsoft Photos (terminate, clear LocalState, re-register)
@@ -44,8 +44,8 @@ function Banner {
 
   Bar
   Say "  Windows Photos Fix + Default Associations Auto-Apply" "White"
-  Say "  Author: rhshourav  |Version: 1.2.1 |Repo: Windows-Scripts" "DarkGray"
-  Say "  GitHub : https://github.com/rhshourav/Windows-Scripts" "DarkGray"
+  Say "  Author: shouravx  |Version: 1.2.1 |Repo: Windows-Scripts" "DarkGray"
+  Say "  GitHub : https://github.com/shouravx/Windows-Scripts" "DarkGray"
   Bar
   Say ""
 }
@@ -66,7 +66,7 @@ try {
         text  = "Windows Invalid Reg fix V1.2.1`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 function Convert-BoundParamsToString {
@@ -448,7 +448,7 @@ $tags = Get-AppTags
 Say "[*] OS Profile : $osPrefix" "Cyan"
 Say ("[*] Detected  : " + ($(if ($tags.Count) { $tags -join ", " } else { "No optional apps detected" }))) "Cyan"
 
-$api = "https://api.github.com/repos/rhshourav/Windows-Scripts/contents/Windows-Photo-Invalid-Reg-Value/File%20Associations?ref=main"
+$api = "https://api.github.com/repos/shouravx/Windows-Scripts/contents/Windows-Photo-Invalid-Reg-Value/File%20Associations?ref=main"
 Say "[*] Fetching repo file list..." "Cyan"
 $items = Invoke-RetryWeb -Uri $api -Retries 3
 

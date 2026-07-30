@@ -1,4 +1,4 @@
-# =========================================================
+﻿# =========================================================
 # Windows 10 → Windows 11 Automated Upgrade Script (PS 5.1)
 # Author : Shourav
 # Role   : Cyber Security Engineer
@@ -38,7 +38,7 @@ try {
         text  = "Windows10 to 11 Upgrade v2.1.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 # -----------------------------
 # Helpers

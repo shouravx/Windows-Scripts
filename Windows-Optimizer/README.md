@@ -1,8 +1,8 @@
-# 🚀 Windows Optimization Script (WinOpt)
+﻿# 🚀 Windows Optimization Script (WinOpt)
 
 **Version:** 7.0.b
-**Author:** rhshourav
-**GitHub:** [https://github.com/rhshourav](https://github.com/rhshourav)
+**Author:** shouravx
+**GitHub:** [https://github.com/shouravx](https://github.com/shouravx)
 
 A **single-file, aggressive PowerShell Windows optimization framework** focused on **performance, visibility, and operator control**.
 
@@ -196,7 +196,7 @@ Run **Powershell As Administrator**.
 ### Remote Execution
 
 ```
-iex (irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Windows-Optimizer/wp-Tuner.ps1)
+iex (irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Windows-Optimizer/wp-Tuner.ps1)
 ```
 
 ### Windows-Optimizer
@@ -216,7 +216,7 @@ Run **PowerShell as Administrator**.
 ### Remote Execution (Only if you trust the source)
 
 ```powershell
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Windows-Optimizer/Windows-Optimizer.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Windows-Optimizer/Windows-Optimizer.ps1 | iex
 ```
 
 You are expected to **read the code first**.
@@ -259,9 +259,9 @@ No GUI planned. No beginner mode planned.
 
 ## 👤 AUTHOR
 
-**rhshourav**
+**shouravx**
 Cyber Security Engineer
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)
 
 ---
 

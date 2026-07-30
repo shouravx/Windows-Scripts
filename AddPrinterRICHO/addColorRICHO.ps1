@@ -1,9 +1,9 @@
-<#
+﻿<#
 .SYNOPSIS
   RICOH Color Printer Auto-Installer (ZIP driver source) - Hardened
 
 .AUTHOR
-  Shourav (rhshourav)
+  Shourav (shouravx)
 
 .VERSION
   1.3.0
@@ -21,7 +21,7 @@
 [CmdletBinding()]
 param(
   # ZIP source (raw)
-  [string]$ZipUrl = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/RPrint_driver/SCP2000_PCL.zip",
+  [string]$ZipUrl = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/RPrint_driver/SCP2000_PCL.zip",
 
   # Local cache/extract dir
   [string]$LocalDriverDir = "C:\Drivers\SCP2000_PCL",
@@ -74,7 +74,7 @@ try {
         text  = "Install Color RICHO v1.3.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # ---------------- UI / LOG ----------------
@@ -336,7 +336,7 @@ function Extract-DriverZip {
 }
 
 # ---------------- MAIN ----------------
-Show-Banner -Title "RICOH Color Printer Auto-Installer (ZIP Driver Source) - Hardened" -Version "1.3.0" -Author "Shourav (rhshourav)"
+Show-Banner -Title "RICOH Color Printer Auto-Installer (ZIP Driver Source) - Hardened" -Version "1.3.0" -Author "Shourav (shouravx)"
 New-BarLine
 
 try {

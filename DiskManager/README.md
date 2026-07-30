@@ -1,10 +1,10 @@
-# Windows-Scripts – Disk Manager
+﻿# Windows-Scripts – Disk Manager
 
 ![Banner](https://via.placeholder.com/800x100.png?text=Windows+Scripts+-+Disk+Manager)
 
-**Author:** rhshourav
+**Author:** shouravx
 **Version:** 2.0.0
-**Log Directory:** `Documents\rhshourav\windowsScripts\logs`
+**Log Directory:** `Documents\shouravx\windowsScripts\logs`
 
 ---
 
@@ -32,7 +32,7 @@ Designed for system administrators and power users, it provides a **Linux-style 
 * **Secure Erase for HDD/SSD (via DiskPart)**
 * **Remote Disk Management via WinRM**
 * **Auto-update from GitHub**
-* **Logging**: All operations saved under `Documents\rhshourav\windowsScripts\logs/diskmgr.log`
+* **Logging**: All operations saved under `Documents\shouravx\windowsScripts\logs/diskmgr.log`
 
 ---
 
@@ -41,7 +41,7 @@ Designed for system administrators and power users, it provides a **Linux-style 
 1. Clone or download the repository:
 
 ```powershell
-git clone https://github.com/rhshourav/Windows-Scripts.git
+git clone https://github.com/shouravx/Windows-Scripts.git
 ```
 
 2. Navigate to the folder:
@@ -54,7 +54,7 @@ cd Windows-Scripts
 
 ```powershell
 # Execute directly from GitHub (safe)
-irm https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/DiskManager/diskmgr.ps1 | iex
+irm https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/DiskManager/diskmgr.ps1 | iex
 ```
 
 > **Note:** Run PowerShell as Administrator for full disk management privileges.
@@ -111,7 +111,7 @@ NVMe0\_PHYSICALDRIVE0   False
 All operations are logged automatically in:
 
 ```
-C:\Users\<USERNAME>\Documents\rhshourav\windowsScripts\logs\diskmgr.log
+C:\Users\<USERNAME>\Documents\shouravx\windowsScripts\logs\diskmgr.log
 ```
 
 Logs include timestamps and action details, e.g.:

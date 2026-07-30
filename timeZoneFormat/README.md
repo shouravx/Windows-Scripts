@@ -1,4 +1,4 @@
-<h1 align="center">Dhaka Time Zone + Time Sync + Date/Time Format (All Users)</h1>
+﻿<h1 align="center">Dhaka Time Zone + Time Sync + Date/Time Format (All Users)</h1>
 
 <p align="center">
   Force Windows time zone to Dhaka, force time synchronization, validate Dhaka time drift, and set date/time formats for all users.
@@ -34,7 +34,7 @@
 Open **PowerShell as Administrator**, then run:
 
 ```powershell
-iex (irm "https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/timeZoneFormat/timeZoneFormat.ps1")
+iex (irm "https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/timeZoneFormat/timeZoneFormat.ps1")
 ````
 
 ---
@@ -88,5 +88,5 @@ Review the script before deploying in managed environments.
 
 ## Author
 
-**Shourav (rhshourav)**
-GitHub: [https://github.com/rhshourav](https://github.com/rhshourav)
+**Shourav (shouravx)**
+GitHub: [https://github.com/shouravx](https://github.com/shouravx)

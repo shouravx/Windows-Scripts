@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     KeyForge - Windows Keyboard Layout, Language & Region Manager.
@@ -42,7 +42,7 @@
     Launches the interactive dashboard.
 
 .EXAMPLE
-    PS> irm https://raw.githubusercontent.com/rhshourav/windows-scripts/main/KeyForge.ps1 | iex
+    PS> irm https://raw.githubusercontent.com/shouravx/windows-scripts/main/KeyForge.ps1 | iex
     Runs KeyForge directly from GitHub with no local file.
 
 .EXAMPLE
@@ -54,11 +54,11 @@
     Tagline   : Forge. Manage. Eliminate.
     Build     : 1.0.0-phase1 (Core Foundation + UI Shell)
     License   : MIT
-    Repo      : https://github.com/rhshourav/windows-scripts
+    Repo      : https://github.com/shouravx/windows-scripts
     Min PS    : 5.1 (Windows PowerShell) / PowerShell 7+ (pwsh)
 
 .LINK
-    https://github.com/rhshourav/windows-scripts
+    https://github.com/shouravx/windows-scripts
 #>
 [CmdletBinding()]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Justification = 'KeyForge is an interactive console dashboard, not a pipeline component - it needs direct control over console color/cursor position that Write-Output cannot provide. This is the standard, accepted exception for TUI-style tools.')]
@@ -92,7 +92,7 @@ $Script:Meta = [ordered]@{
     BuildLabel   = 'Core Foundation + UI Shell'
     BuildDate    = '2026-07-13'
     Author       = 'KeyForge Team'
-    ProjectURL   = 'https://github.com/rhshourav/windows-scripts'
+    ProjectURL   = 'https://github.com/shouravx/windows-scripts'
     License      = 'MIT'
     MinPSVersion = [version]'5.1'
     SupportedOS  = @(10, 11)
@@ -4690,7 +4690,7 @@ function Show-KFHelp {
         'USAGE'
         '  .\KeyForge.ps1 [-NoColor] [-VerboseLog] [-DebugLog] [-Help] [-Version]'
         ''
-        '  irm https://raw.githubusercontent.com/rhshourav/windows-scripts/main/KeyForge.ps1 | iex'
+        '  irm https://raw.githubusercontent.com/shouravx/windows-scripts/main/KeyForge.ps1 | iex'
         ''
         'PARAMETERS'
         '  -Help         Show this help and exit.'

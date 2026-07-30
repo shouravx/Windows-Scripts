@@ -1,8 +1,8 @@
-<#
+﻿<#
   ================================================================
    Windows Scripts  -  Main Menu Launcher
-   Author  : rhshourav
-   GitHub  : https://github.com/rhshourav/Windows-Scripts
+   Author  : shouravx
+   GitHub  : https://github.com/shouravx/Windows-Scripts
     Version : 27.6.2
    Notes   : iex/irm compatible, auto-elevates, single-key nav,
              launches sub-scripts in new elevated windows,
@@ -68,11 +68,11 @@ $ErrorActionPreference = 'Stop'
 #  CONSTANTS
 # ================================================================
 $Script:VER    = '27.6.2'
-$Script:AUTHOR = 'rhshourav'
-$Script:GITHUB = 'https://github.com/rhshourav/Windows-Scripts'
+$Script:AUTHOR = 'shouravx'
+$Script:GITHUB = 'https://github.com/shouravx/Windows-Scripts'
 
 # URL used ONLY when launched via iex/irm and elevation is needed
-$Script:SELF_URL = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/windowsScripts.ps1'
+$Script:SELF_URL = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/windowsScripts.ps1'
 
 # LAN share host(s) to temporarily trust as Local Intranet per child window
 $Script:TrustedIPs = @('192.168.18.201')
@@ -253,7 +253,7 @@ try {
         text  = "Windows Scripts v$($Script:VER)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 
@@ -613,15 +613,15 @@ function Initialize-MenuStructure {
             parent       = $null
             help_text    = 'Single key to launch  |  E/S/H = submenus  |  Q = Quit'
             items = @{
-                '1' = @{ Title = 'App Setup Framework';              Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1' }
-                '2' = @{ Title = 'Office 365';                       Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/office-Install/o365.ps1' }
-                '3' = @{ Title = 'Office LTSC 2021';                 Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/office-Install/oLTSC-2021.ps1' }
-                '4' = @{ Title = 'Microsoft Store (LTSC)';           Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/LTSC-ADD-MS_Store-2019/DL-RUN.ps1' }
-                '5' = @{ Title = 'RICHO Printer Setup';               Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/AddPrinterRICHO/aoRICHO.ps1' }
-                '6' = @{ Title = 'Activation / Edition Change';      Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Add_Active/run' }
-                '7' = @{ Title = 'Time Sync & Format';                Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/timeZoneFormat/timeZoneFormat.ps1' }
-                '8' = @{ Title = 'DriverDex Auto Driver Installation'; Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/DriverDex/DriverDex.ps1'; Tag = 'NEW' }
-                '9' = @{ Title = 'ERP Automate Setup';                Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/ERP-Automate/run_Auto-ERP.ps1' }
+                '1' = @{ Title = 'App Setup Framework';              Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Auto-App-Installer-Framework/autoInstallFromLocal.ps1' }
+                '2' = @{ Title = 'Office 365';                       Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/office-Install/o365.ps1' }
+                '3' = @{ Title = 'Office LTSC 2021';                 Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/office-Install/oLTSC-2021.ps1' }
+                '4' = @{ Title = 'Microsoft Store (LTSC)';           Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/LTSC-ADD-MS_Store-2019/DL-RUN.ps1' }
+                '5' = @{ Title = 'RICHO Printer Setup';               Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/AddPrinterRICHO/aoRICHO.ps1' }
+                '6' = @{ Title = 'Activation / Edition Change';      Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Add_Active/run' }
+                '7' = @{ Title = 'Time Sync & Format';                Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/timeZoneFormat/timeZoneFormat.ps1' }
+                '8' = @{ Title = 'DriverDex Auto Driver Installation'; Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/DriverDex/DriverDex.ps1'; Tag = 'NEW' }
+                '9' = @{ Title = 'ERP Automate Setup';                Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/ERP-Automate/run_Auto-ERP.ps1' }
             }
             submenu_shortcuts = @(
                 @{ Key = 'E'; MenuId = 'applications'; Display = 'More Applications';        Count = 5 }
@@ -639,11 +639,11 @@ function Initialize-MenuStructure {
             parent       = 'main'
             help_text    = 'Select tool  |  Esc or B = Back to Main  |  Q = Quit'
             items = @{
-                '1' = @{ Title = 'Install Edge';           Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1' }
-                '2' = @{ Title = 'Remove Edge';             Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/MicroSoft-Edge/edge-Uninstall.ps1' }
-                '3' = @{ Title = 'Remove New Outlook';       Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/New%20Outlook%20Uninstaller/uninstall-NOU.ps1' }
-                '4' = @{ Title = 'File Ops (Delete/Move)';   Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/fileOps/fileOps.ps1'; Tag = 'NEW' }
-                '5' = @{ Title = 'PyForge (Python to EXE)';  Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/PyForge/PyForge.ps1'; Tag = 'NEW' }
+                '1' = @{ Title = 'Install Edge';           Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/installEdge.ps1' }
+                '2' = @{ Title = 'Remove Edge';             Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/MicroSoft-Edge/edge-Uninstall.ps1' }
+                '3' = @{ Title = 'Remove New Outlook';       Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/New%20Outlook%20Uninstaller/uninstall-NOU.ps1' }
+                '4' = @{ Title = 'File Ops (Delete/Move)';   Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/fileOps/fileOps.ps1'; Tag = 'NEW' }
+                '5' = @{ Title = 'PyForge (Python to EXE)';  Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/PyForge/PyForge.ps1'; Tag = 'NEW' }
             }
         }
 
@@ -656,15 +656,15 @@ function Initialize-MenuStructure {
             parent       = 'main'
             help_text    = 'Select tool  |  Esc or B = Back to Main  |  Q = Quit'
             items = @{
-                '1' = @{ Title = 'Remove Duplicate Files'; Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/DupReaper/drip.ps1' }
-                '2' = @{ Title = 'IP Config';                Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/IPConfig/Ipconfig.ps1' }
-                '3' = @{ Title = 'Disk Manager';             Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/DiskManager/diskmgr.ps1' }
-                '4' = @{ Title = 'Install MediCatUSB';       Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Install-MediCatUSB/installMUSVB.ps1' }
-                '5' = @{ Title = 'Windows Tuner';            Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Windows-Optimizer/wp-Tuner.ps1' }
-                '6' = @{ Title = 'Windows Optimizer';        Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Windows-Optimizer/Windows-Optimizer.ps1' }
-                '7' = @{ Title = 'Disable Updates';          Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Windows-Update/Disable-WindowsUpdate.ps1' }
-                '8' = @{ Title = 'Enable Updates';           Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Windows-Update/Enable-WindowsUpdate.ps1' }
-                '9' = @{ Title = 'Upgrade to Win 11';        Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/TO-Win11-Auto-Upgrade/Win11-AutoUpgrade.ps1' }
+                '1' = @{ Title = 'Remove Duplicate Files'; Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/DupReaper/drip.ps1' }
+                '2' = @{ Title = 'IP Config';                Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/IPConfig/Ipconfig.ps1' }
+                '3' = @{ Title = 'Disk Manager';             Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/DiskManager/diskmgr.ps1' }
+                '4' = @{ Title = 'Install MediCatUSB';       Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Install-MediCatUSB/installMUSVB.ps1' }
+                '5' = @{ Title = 'Windows Tuner';            Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Windows-Optimizer/wp-Tuner.ps1' }
+                '6' = @{ Title = 'Windows Optimizer';        Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Windows-Optimizer/Windows-Optimizer.ps1' }
+                '7' = @{ Title = 'Disable Updates';          Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Windows-Update/Disable-WindowsUpdate.ps1' }
+                '8' = @{ Title = 'Enable Updates';           Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Windows-Update/Enable-WindowsUpdate.ps1' }
+                '9' = @{ Title = 'Upgrade to Win 11';        Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/TO-Win11-Auto-Upgrade/Win11-AutoUpgrade.ps1' }
             }
         }
 
@@ -677,12 +677,12 @@ function Initialize-MenuStructure {
             parent       = 'main'
             help_text    = 'Select tool  |  Esc or B = Back to Main  |  Q = Quit'
             items = @{
-                '1' = @{ Title = 'Extract Drivers';            Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Driver-Extractor/dExtractor.ps1' }
-                '2' = @{ Title = 'Install Extracted Drivers';   Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/Driver-Extractor/dInstaller.ps1' }
-                '3' = @{ Title = 'ERP Font Install';            Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/ERP-Automate/font_install.ps1'; Tag = 'NEW' }
-                '4' = @{ Title = 'WARDEN [Registry Nexus]';     Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/regBack/WARDEN.ps1' }
-                '5' = @{ Title = 'Intel Interrupt Fix';         Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/SystemInterrupt-Fix/Intel-SystemInterrupt-Fix.ps1' }
-                '6' = @{ Title = 'WPT Interrupt Fix';           Url = 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/refs/heads/main/SystemInterrupt-Fix/wpt_interrupt_fix_plus.ps1' }
+                '1' = @{ Title = 'Extract Drivers';            Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Driver-Extractor/dExtractor.ps1' }
+                '2' = @{ Title = 'Install Extracted Drivers';   Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/Driver-Extractor/dInstaller.ps1' }
+                '3' = @{ Title = 'ERP Font Install';            Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/ERP-Automate/font_install.ps1'; Tag = 'NEW' }
+                '4' = @{ Title = 'WARDEN [Registry Nexus]';     Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/regBack/WARDEN.ps1' }
+                '5' = @{ Title = 'Intel Interrupt Fix';         Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/SystemInterrupt-Fix/Intel-SystemInterrupt-Fix.ps1' }
+                '6' = @{ Title = 'WPT Interrupt Fix';           Url = 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/refs/heads/main/SystemInterrupt-Fix/wpt_interrupt_fix_plus.ps1' }
             }
         }
     }

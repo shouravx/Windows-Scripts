@@ -1,4 +1,4 @@
-<#
+﻿<#
   Office LTSC 2021 Auto-Installer (ODT ZIP)
   - Version 2.3.0
   - Downloads your OLTSC-2021.zip (setup.exe + Configuration.xml)
@@ -36,7 +36,7 @@ try {
         text  = "Office LTSC Install v2.3.0`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 
 # -----------------------------
@@ -50,7 +50,7 @@ try {
 } catch {}
 
 #region Globals
-$ZipUrl     = "https://raw.githubusercontent.com/rhshourav/ideal-fishstick/refs/heads/main/OLTSC-2021.zip"
+$ZipUrl     = "https://raw.githubusercontent.com/shouravx/ideal-fishstick/refs/heads/main/OLTSC-2021.zip"
 $BaseDir    = Join-Path $env:TEMP ("OLTSC2021_" + [Guid]::NewGuid().ToString("N"))
 $ZipPath    = Join-Path $BaseDir "OLTSC-2021.zip"
 $LogPath    = Join-Path $BaseDir ("install_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".log")
@@ -62,7 +62,7 @@ function Write-Banner {
   Clear-Host
   $line = ("=" * 70)
   Write-Host $line -ForegroundColor DarkCyan
-  Write-Host "  Office LTSC 2021 Auto-Installer (ODT ZIP)  |  rhshourav | v2.3.0" -ForegroundColor Cyan
+  Write-Host "  Office LTSC 2021 Auto-Installer (ODT ZIP)  |  shouravx | v2.3.0" -ForegroundColor Cyan
   Write-Host $line -ForegroundColor DarkCyan
   Write-Host "  WorkDir: $BaseDir" -ForegroundColor DarkGray
   Write-Host "  Log   : $LogPath" -ForegroundColor DarkGray

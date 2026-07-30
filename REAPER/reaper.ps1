@@ -1,14 +1,14 @@
-#Requires -Version 5.0
+﻿#Requires -Version 5.0
 <#
 ================================================================================
   REAPER - Ruthless Elimination & Application Purge Engine with Registry-wipe
   Part of Windows Scripts Repository
 ================================================================================
-  Author      : rhshourav
-  Repository  : https://github.com/rhshourav/Windows-Scripts
+  Author      : shouravx
+  Repository  : https://github.com/shouravx/Windows-Scripts
   Version     : 1.5.0
   Compatibility: Windows 10 (PowerShell 5.0+) through Windows 11
-  Execute via : iex (irm 'https://raw.githubusercontent.com/rhshourav/Windows-Scripts/main/Apps/REAPER.ps1')
+  Execute via : iex (irm 'https://raw.githubusercontent.com/shouravx/Windows-Scripts/main/Apps/REAPER.ps1')
 ================================================================================
   FEATURES:
     - Detects Win32, MSI, UWP/Store, MSIX, AppX, Provisioned, System & Bloat apps
@@ -33,8 +33,8 @@ $ErrorActionPreference = 'Continue'
 #  METADATA
 #============================================================
 $Script:R_VERSION = '1.5.0'
-$Script:R_AUTHOR  = 'rhshourav'
-$Script:R_REPO    = 'https://github.com/rhshourav/Windows-Scripts'
+$Script:R_AUTHOR  = 'shouravx'
+$Script:R_REPO    = 'https://github.com/shouravx/Windows-Scripts'
 $Script:SessionID = [System.Guid]::NewGuid().ToString('N').Substring(0,8).ToUpper()
 $Script:LogFile   = $null
 $Script:RestoreCreated = $false
@@ -76,7 +76,7 @@ try {
         text  = "REAPER v$($Script:R_VERSION)`nUser: $env:USERNAME  PC: $env:COMPUTERNAME  Domain: $env:USERDOMAIN  IP: $($localIPs -join ', ')"
     } | ConvertTo-Json)
 
-    Invoke-RestMethod -Uri 'https://cryocore.rhshourav.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
+    Invoke-RestMethod -Uri 'https://cryocore.shouravx.workers.dev/message' -Method Post -ContentType 'application/json' -Body $body -ErrorAction SilentlyContinue | Out-Null
 } catch {}
 #region ============================================================
 #  CONSOLE UI
