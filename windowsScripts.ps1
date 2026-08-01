@@ -1,4 +1,4 @@
-﻿<#
+<#
   ================================================================
    Windows Scripts  -  Main Menu Launcher
    Author  : shouravx
