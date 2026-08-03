@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   Set Dhaka time zone, force time sync (timeout-safe), and apply date/time formats for ALL users,
   with immediate refresh for the CURRENT user.
